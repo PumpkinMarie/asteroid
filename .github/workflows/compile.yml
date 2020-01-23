@@ -4,17 +4,14 @@ on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - name: fetch
         uses: actions/checkout@v1
-      - name: clean
-        run: make clean
-      - name: build
-        run: make
-      - name: try-release
-        run: make release
-      - name: try-debug
-        run: make debug
+      - name: preinstall
+        run: |
+          sudo apt-get update -y -qq
+          sudo apt-get install libsdl2-dev -y -qq
+      - name : build
+        run: |
+          make
