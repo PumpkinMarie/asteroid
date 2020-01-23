@@ -4,7 +4,7 @@ LDFLAGS  :=
 BUILD    := ./build
 OBJ_DIR  := $(BUILD)/objects
 APP_DIR  := $(BUILD)/apps
-TARGET   := epochC
+TARGET   := asteroid
 INCLUDE  := -Iinc/
 SRC      := $(wildcard src/*.cc)
 
@@ -33,6 +33,9 @@ debug: all
 
 release: CXXFLAGS += -O2
 release: all
+
+install:
+	cp $(APP_DIR)/$(TARGET) /usr/bin/$(TARGET)
 
 clean:
 	-@rm -rvf $(OBJ_DIR)/*
