@@ -1,0 +1,17 @@
+name: compiling
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: fetch
+        uses: actions/checkout@v1
+      - name: preinstall
+        run: |
+          sudo apt-get update -y -qq
+          sudo apt-get install libsdl2-dev -y -qq
+      - name : build
+        run: |
+          make
