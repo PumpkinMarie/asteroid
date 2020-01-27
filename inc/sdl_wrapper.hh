@@ -4,9 +4,10 @@
 #include <SDL2/SDL.h>
 #include <string>
 
+namespace sdl {
 class SDL {
   public:
-    SDL();          // easy constructor
+    explicit SDL(); // easy constructor
     virtual ~SDL(); // destructor
 
     SDL(const SDL& other) = delete;            // not copyable
@@ -15,4 +16,7 @@ class SDL {
     SDL& operator=(SDL&& other) = delete;      // not movable
 };
 
+void delay(Uint32 ms);
+
+} // namespace sdl
 #endif
