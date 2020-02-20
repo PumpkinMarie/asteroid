@@ -1,5 +1,7 @@
 #include "window_wrapper.hh"
 
+#include <iostream>
+
 Window::Window(
 const std::string& title, int x, int y, int w, int h, Uint32 flags) {
     if ((window = SDL_CreateWindow(title.c_str(), x, y, w, h, flags)) ==

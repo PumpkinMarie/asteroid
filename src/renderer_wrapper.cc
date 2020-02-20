@@ -14,3 +14,15 @@ Renderer::~Renderer() {
 }
 
 SDL_Renderer* Renderer::get() const { return renderer; }
+
+int Renderer::setDrawColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha) {
+    return SDL_SetRenderDrawColor(renderer, red, green, blue, alpha);
+}
+
+int Renderer::clear() { return SDL_RenderClear(renderer); }
+
+int Renderer::drawLine(int x1, int y1, int x2, int y2) {
+    return SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+}
+
+int Renderer::present() { SDL_RenderPresent(renderer); }
