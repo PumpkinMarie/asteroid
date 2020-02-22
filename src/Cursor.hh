@@ -3,12 +3,15 @@
 
 #include <SDL.h>
 #include "renderer_wrapper.hh"
+#include <cmath>
 
 
 class Cursor
 {
     SDL_Point data_[5];
-    float destination[2];
+    SDL_Point destination;
+    SDL_Point centre_;
+    float angle_;
 
     public:   
         Cursor();
@@ -16,7 +19,7 @@ class Cursor
         void drawdata(SDL_Renderer* renderer) const;
         void move(int direction) ;
         void rotation(int direction) ;
-
+        void rotation_data() ;
 };
 
 #endif // CURSOR_H
