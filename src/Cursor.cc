@@ -1,4 +1,5 @@
 #include "Cursor.hh"
+#include <iostream>
 
 Cursor::Cursor(){
     
@@ -13,8 +14,8 @@ Cursor::Cursor(){
     data_[4].x = 320;
     data_[4].y = 240;
 
-    destination.x = 0;
-    destination.y = 1;
+    destination[0] = 0;
+    destination[1] = 1;
 }
 
 
@@ -27,12 +28,12 @@ void Cursor::move(int direction){
         switch (direction)
         {
         case 1:
-            data_[i].x +=5*destination.x;
-            data_[i].y +=5*destination.y;
+            data_[i].x +=5*destination[0];
+            data_[i].y +=5*destination[1];
             break;
         case 2:
-            data_[i].x -=5*destination.x;
-            data_[i].y -=5*destination.y;
+            data_[i].x -=5*destination[0];
+            data_[i].y -=5*destination[1];
             break;      
         default:
             break;
@@ -41,16 +42,22 @@ void Cursor::move(int direction){
 }
 
 void Cursor::rotation(int direction){
-
+    std::cout<<destination[0]<<" "<<destination[1]<<std::endl;
     for(int i=0;i<5;i++){
         switch (direction)
         {
         case 1:
-            data_[i].x -=5;
-            data_[i].y -=5;
+            if (destination[1]==1)
+                destination[0]-=0.1;
+            else
+                destination[0]+=0.1;
             break;
         case 2:
-            data_[i].y +=5;
+            if (destination[1]==1)
+                destination[0]+=0.1;
+            else
+                destination[0]-=0.1;
+            
             break;      
         default:
             break;

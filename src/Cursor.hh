@@ -8,7 +8,7 @@
 class Cursor
 {
     SDL_Point data_[5];
-    SDL_Point destination;
+    float destination[2];
 
     public:   
         Cursor();
