@@ -25,6 +25,7 @@ set(SRC_FILES
     src/renderer_wrapper.cc
     src/sdl_wrapper.cc
     src/window_wrapper.cc
+    src/Cursor.cc
     src/asteroid.cc)
 
 compilation(EXEC asteroid SRC ${SRC_FILES}  USE_SDL)

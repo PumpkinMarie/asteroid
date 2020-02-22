@@ -2,10 +2,12 @@
 #include "renderer_wrapper.hh"
 #include "sdl_wrapper.hh"
 #include "window_wrapper.hh"
+#include "Cursor.hh"
 
 #include <iostream>
 
 using namespace sdl;
+
 
 int main() {
     try {
@@ -27,13 +29,19 @@ int main() {
 
 	    SDL_SetRenderDrawColor(
 	    renderer.get(), 255, 255, 255, SDL_ALPHA_OPAQUE);
-	    SDL_RenderDrawLine(renderer.get(), 0, 0, 640, 480);
+	    //SDL_RenderDrawLine(renderer.get(), 0, 0, 640, 480);
 	    SDL_RenderPresent(renderer.get());
 	    // fin à envoyer dans la classe renderer
 
+		Cursor c;
+		c.drawdata(renderer.get());
+		SDL_RenderPresent(renderer.get());
+
 	    delay(16); // 60 fps
+
 	    while (SDL_PollEvent(&event)) {
 		if (event.type == SDL_QUIT) { done = SDL_TRUE; }
+
 	    }
 	}
 
