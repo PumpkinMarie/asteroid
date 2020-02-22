@@ -8,11 +8,14 @@
 class Cursor
 {
     SDL_Point data_[5];
+    SDL_Point destination;
 
     public:   
         Cursor();
         SDL_Point getdata() const;
         void drawdata(SDL_Renderer* renderer) const;
+        void move(int direction) ;
+        void rotation(int direction) ;
 
 };
 
