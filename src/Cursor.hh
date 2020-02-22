@@ -9,7 +9,6 @@
 class Cursor
 {
     SDL_Point data_[5];
-    SDL_Point destination;
     SDL_Point centre_;
     float angle_;
 
@@ -19,7 +18,7 @@ class Cursor
         void drawdata(SDL_Renderer* renderer) const;
         void move(int direction) ;
         void rotation(int direction) ;
-        void rotation_data() ;
+        void rotation_data(float angle) ;
 };
 
 #endif // CURSOR_H
