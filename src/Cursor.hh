@@ -19,6 +19,8 @@ class Cursor
         void move(int direction) ;
         void rotation(int direction) ;
         void rotation_data(float angle) ;
+        void fct_du_soir() ;
+
 };
 
 #endif // CURSOR_H
