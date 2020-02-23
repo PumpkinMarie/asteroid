@@ -101,7 +101,7 @@ void Ship::rotation_render(){
 
 void Ship::change_speed(int vitesse){
     //speed_+= vitesse*(1 - (angle_ - angle_move_));
-    speed_ = 1;
+    speed_ = vitesse;
     if (angle_move_ != angle_){
         angle_move_ += (angle_ - angle_tmp_)*0.1*speed_;
         std::cout<<angle_<<" "<<angle_move_<< " "<< angle_tmp_<<std::endl;
