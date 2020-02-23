@@ -28,8 +28,8 @@ void Ship::drawdata(SDL_Renderer* renderer) const{
 }
 
 void Ship::move(){
-    float c = cos( angle_move_ );
-    float s = sin( angle_move_ );
+    float c = cos( angle_move_* M_PI / 180 );
+    float s = sin( angle_move_* M_PI / 180 );
 
     center_[0] = data_[0].x + c * speed_;
     center_[1] = data_[0].y - s * speed_;
@@ -55,8 +55,8 @@ void Ship::rotation(int direction){
 
 void Ship::rotation_data(float angle){
 
-    angle = angle * M_PI / 180;
     angle_ = angle_ + angle;
+    angle = angle * M_PI / 180;
     for(int i=0;i<5;i++){  
         int xM = data_[i].x - center_[0];
         int yM = data_[i].y - center_[1];
@@ -68,11 +68,13 @@ void Ship::rotation_data(float angle){
     data_[2].x = mid_x + (data_[0].x-mid_x)/3;
     data_[2].y = mid_y + (data_[0].y-mid_y)/3;    
 
+    angle_tmp_ = angle_move_;
+
 }
 
 void Ship::rotation_render(){
 
-    float angle = angle_ + M_PI/2;
+    float angle = angle_* M_PI / 180 + M_PI/2;
 
     data_[0].x = center_[0];
     data_[0].y = center_[1];
@@ -99,10 +101,10 @@ void Ship::rotation_render(){
 
 void Ship::change_speed(int vitesse){
     //speed_+= vitesse*(1 - (angle_ - angle_move_));
-    speed = 1;
-    angle_move_ += (angle_ - angle_move_)*0.5*speed_;
-        std::cout<<angle_<<" "<<angle_move_<<std::endl;
-        std::cout<<cos(angle_move_)<<" "<<sin(angle_move_)<<std::endl;
-
+    speed_ = 1;
+    if (angle_move_ != angle_){
+        angle_move_ += (angle_ - angle_tmp_)*0.1*speed_;
+        std::cout<<angle_<<" "<<angle_move_<< " "<< angle_tmp_<<std::endl;
+    }
     move();
 }

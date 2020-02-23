@@ -10,8 +10,9 @@ class Ship
 {
     SDL_Point data_[5];
     float center_[2];
-    float angle_;
+    float angle_; //en degré
     float angle_move_; //angle de direction du vaisseau
+    float angle_tmp_; //angle de direction du vaisseau
     float speed_;
 
 
