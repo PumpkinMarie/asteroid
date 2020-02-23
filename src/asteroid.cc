@@ -2,7 +2,7 @@
 #include "renderer_wrapper.hh"
 #include "sdl_wrapper.hh"
 #include "window_wrapper.hh"
-#include "Cursor.hh"
+#include "Ship.hh"
 
 #include <iostream>
 #include <utility>
@@ -22,7 +22,7 @@ int main() {
 	Renderer renderer(window, -1, SDL_RENDERER_SOFTWARE);
 	SDL_bool done = SDL_FALSE;
 
-	Cursor c;
+	Ship ship;
 	while (!done) // display loop
 	{
 	    SDL_Event event;
@@ -36,19 +36,19 @@ int main() {
 	    //0, 0, window.getScreenSize().first, window.getScreenSize().second);
 
 		SDL_RenderPresent(renderer.get());
-		c.drawdata(renderer.get());
+		ship.drawdata(renderer.get());
 
 	    renderer.present();
 	    // fin à envoyer dans la classe renderer
-	    
+	    ship.move();
 			    delay(16); // 60 fps
 			    
 	    while (SDL_PollEvent(&event)) {
 		if (event.type == SDL_QUIT) { done = SDL_TRUE; }
-		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_LEFT) { c.rotation(1); }
-		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RIGHT) { c.rotation(2); }
-		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_UP) { c.move(1); }
-		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_DOWN) { c.move(2); }
+		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_LEFT) { ship.rotation(1); }
+		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RIGHT) { ship.rotation(2); }
+		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_UP) { ship.change_speed(1); }
+		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_DOWN) { ship.change_speed(-1); }
 	    }
 	}
 
