@@ -27,6 +27,15 @@ void Ship::drawdata(SDL_Renderer* renderer) const{
     SDL_RenderDrawLines(renderer,data_,5);
 }
 
+SDL_Point Ship::getdatafirst() const{
+    return data_[0];
+}
+
+float Ship::getangle() const{
+    return angle_;
+}
+
+
 void Ship::move(){
     float c = cos( angle_move_* M_PI / 180 );
     float s = sin( angle_move_* M_PI / 180 );

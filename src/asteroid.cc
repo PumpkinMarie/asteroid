@@ -3,9 +3,12 @@
 #include "sdl_wrapper.hh"
 #include "window_wrapper.hh"
 #include "Ship.hh"
+#include "Bullet.hh"
 
 #include <iostream>
 #include <utility>
+#include <vector>
+#include <algorithm>
 
 using namespace sdl;
 
@@ -23,6 +26,7 @@ int main() {
 	SDL_bool done = SDL_FALSE;
 
 	Ship ship;
+	std::vector<Bullet> Bullets;
 	while (!done) // display loop
 	{
 	    SDL_Event event;
@@ -35,12 +39,30 @@ int main() {
 	    //renderer.drawLine(
 	    //0, 0, window.getScreenSize().first, window.getScreenSize().second);
 
+
+		// Update Bullets
+		for (auto &b : Bullets)
+			b.move_bullet();
+
+		if (Bullets.size() > 0)
+		{
+			auto i = remove_if(Bullets.begin(), Bullets.end(), [&](Bullet b) { return (b.getTime()<=0); });
+			if (i != Bullets.end())
+				Bullets.erase(i);
+		}
+
+		// Draw Bullets
+		for (auto b : Bullets)
+			b.render_bullet(renderer.get());
+
+
+
 		SDL_RenderPresent(renderer.get());
 		ship.drawdata(renderer.get());
 
 	    renderer.present();
 	    // fin à envoyer dans la classe renderer
-	    ship.move();
+
 			    delay(16); // 60 fps
 			    
 	    while (SDL_PollEvent(&event)) {
@@ -49,7 +71,11 @@ int main() {
 		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RIGHT) { ship.rotation(2); }
 		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_UP) { ship.change_speed(1); }
 		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_DOWN) { ship.change_speed(-1); }
+		if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE) 
+		{
+			Bullets.push_back({ ship });	}
 	    }
+		ship.move();
 	}
 
 	// ordering of destroyer

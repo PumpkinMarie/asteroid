@@ -18,7 +18,8 @@ class Ship
 
     public:   
         Ship();
-        SDL_Point getdata() const;
+        SDL_Point getdatafirst() const;
+        float getangle() const;
         void drawdata(SDL_Renderer* renderer) const; //dessine les lignes du vaisseau
         void move(); //déplace le vaisseau selon l'angle angle_direction
         void rotation(int direction); 
