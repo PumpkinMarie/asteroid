@@ -1,5 +1,6 @@
 #include "Ship.hh"
 #include <iostream>
+#include "utilitaires.hh"
 
 Ship::Ship(){
     
@@ -42,6 +43,7 @@ void Ship::move(){
 
     center_[0] = data_[0].x + c * speed_;
     center_[1] = data_[0].y - s * speed_;
+
     rotation_render();
 
 }
@@ -105,7 +107,13 @@ void Ship::rotation_render(){
     int mid_x = data_[1].x + (data_[3].x-data_[1].x)/2;
     int mid_y = data_[1].y + (data_[3].y-data_[1].y)/2;
     data_[2].x = mid_x + (data_[0].x-mid_x)/3;
-    data_[2].y = mid_y + (data_[0].y-mid_y)/3;   
+    data_[2].y = mid_y + (data_[0].y-mid_y)/3; 
+
+/* A revoir version simple mais création de lignes non voulues
+    for (int i =0;i<5;i++){
+        data_[i] = Out_of_Screen(data_[i]);  
+    }
+*/
 }
 
 void Ship::change_speed(int vitesse){

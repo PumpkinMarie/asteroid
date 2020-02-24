@@ -4,6 +4,7 @@
 #include "window_wrapper.hh"
 #include "Ship.hh"
 #include "Bullet.hh"
+#include "utilitaires.hh"
 
 #include <iostream>
 #include <utility>
