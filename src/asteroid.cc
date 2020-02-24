@@ -4,6 +4,7 @@
 #include "window_wrapper.hh"
 #include "Ship.hh"
 #include "Bullet.hh"
+#include "Asteroids.hh"
 #include "utilitaires.hh"
 
 #include <iostream>
@@ -28,6 +29,11 @@ int main() {
 
 	Ship ship;
 	std::vector<Bullet> Bullets;
+
+	std::vector<Asteroids> Asteroids;
+	Asteroids.push_back({});
+	Asteroids.push_back({});
+
 	while (!done) // display loop
 	{
 	    SDL_Event event;
@@ -52,11 +58,15 @@ int main() {
 				Bullets.erase(i);
 		}
 
+		for (auto &a : Asteroids)
+			a.move();
+
 		// Draw Bullets
 		for (auto b : Bullets)
 			b.render_bullet(renderer.get());
 
-
+		for (auto a : Asteroids)
+			a.drawdata(renderer.get());
 
 		SDL_RenderPresent(renderer.get());
 		ship.drawdata(renderer.get());
