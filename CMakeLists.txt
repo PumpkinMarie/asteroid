@@ -11,12 +11,9 @@ project(TP_PRG_AV LANGUAGES CXX)
 
 function(COMPILATION)
     cmake_parse_arguments( COMPILATION_PREFIX "USE_SDL" "EXEC" "SRC;HDR_FO" ${ARGN})
-    add_executable(${
-    COMPILATION_PREFIX_EXEC} "")
+    add_executable(${COMPILATION_PREFIX_EXEC} "")
     target_sources(${COMPILATION_PREFIX_EXEC} PRIVATE ${COMPILATION_PREFIX_SRC})
-    target_include_directories(${COMPILATION_PREFIX_EXEC} PRIVATE ${
-    CMAKE_CURRENT_SOURCE_DIR}
-})
+    target_include_directories(${COMPILATION_PREFIX_EXEC} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}})
     include_directories(${COMPILATION_PREFIX_EXEC} PRIVATE ./inc)
     set_target_properties(${COMPILATION_PREFIX_EXEC} PROPERTIES CXX_STANDARD 17)
     if (${COMPILATION_PREFIX_USE_SDL})
