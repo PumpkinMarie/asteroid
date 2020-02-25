@@ -8,10 +8,9 @@ jobs:
     steps:
       - name: fetch
         uses: actions/checkout@v1
-      - name: preinstall
+      - name: run
         run: |
-          sudo apt-get update -y -qq
-          sudo apt-get install libsdl2-dev -y -qq
-      - name : build
-        run: |
+          mkdir build
+          cd build
+          cmake ..
           make
