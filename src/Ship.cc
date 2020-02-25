@@ -103,11 +103,25 @@ void Ship::rotation_render() {
     data_[2].x = mid_x + (data_[0].x - mid_x) / 3;
     data_[2].y = mid_y + (data_[0].y - mid_y) / 3;
 
-    /* A revoir version simple mais création de lignes non voulues
-        for (int i =0;i<5;i++){
-            data_[i] = Out_of_Screen(data_[i]);
+    // A revoir version simple mais création de lignes non voulues
+    int x = center_[0];
+    int y = center_[1];
+    if (x < 0)
+        for (auto& val : data_) {
+            val.x += 640;
         }
-    */
+    else if (x >= 640)
+        for (auto& val : data_) {
+            val.x -= 640;
+        }
+    if (y < 0)
+        for (auto& val : data_) {
+            val.y += 480;
+        }
+    else if (x >= 480)
+        for (auto& val : data_) {
+            val.x -= 480;
+        }
 }
 
 void Ship::change_speed(int vitesse) {
