@@ -33,9 +33,9 @@ int main() {
     Ship ship;
     std::vector<Bullet> Bullets;
 
-    std::vector<Asteroids> Asteroids;
-    Asteroids.push_back({});
-    Asteroids.push_back({});
+    std::vector<Asteroids> asteroids;
+    asteroids.push_back(Asteroids {window});
+    asteroids.push_back(Asteroids {window});
 
     while (!done) // display loop
     {
@@ -58,15 +58,14 @@ int main() {
                 Bullets.erase(i);
         }
 
-        for (auto& a : Asteroids)
+        for (auto& a : asteroids) {
             a.move();
+            a.draw();
+        }
 
         // Draw Bullets
         for (auto b : Bullets)
             b.render_bullet(renderer);
-
-        for (auto a : Asteroids)
-            a.drawdata(renderer);
 
         SDL_RenderPresent(renderer);
 

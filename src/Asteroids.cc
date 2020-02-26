@@ -2,47 +2,45 @@
 
 #include <iostream>
 
-Asteroids::Asteroids() {
-    // srand (time(NULL));
-    center_[0] = rand() % 640;
-    center_[1] = rand() % 480;
-
-    rayon_ = rand() % 20 + 5;
-
-    changeData();
-
-    angle_ = rand() % 360;
-
-    speed_ = 1;
+Asteroids::Asteroids(SDL_Window* window) : window_(window) {
+    center_ = {30, 30};
+    radius_ = 16;
+    speed_  = {1, 2};
+    accel_  = {0, 0};
 }
 
-void Asteroids::drawdata(SDL_Renderer* renderer) const {
-    SDL_RenderDrawLines(renderer, data_, 5);
-}
-
-void Asteroids::changeData() {
-    data_[0].x = center_[0] + rayon_;
-    data_[0].y = center_[1];
-    data_[1].x = center_[0];
-    data_[1].y = center_[1] - rayon_;
-    data_[2].x = center_[0] - rayon_;
-    data_[2].y = center_[1];
-    data_[3].x = center_[0];
-    data_[3].y = center_[1] + rayon_;
-    data_[4].x = center_[0] + rayon_;
-    data_[4].y = center_[1];
-}
-
-float Asteroids::getangle() const {
-    return angle_;
+void Asteroids::draw() {
+    SDL_RenderDrawCircleF(getRenderer(), center_, radius_);
 }
 
 void Asteroids::move() {
-    float c = cos(angle_ * M_PI / 180);
-    float s = sin(angle_ * M_PI / 180);
+    center_.x += speed_.x;
+    center_.y += speed_.y;
+    speed_.x += accel_.x;
+    speed_.y += accel_.y;
+    wrapCoordinates();
+}
 
-    center_[0] += c * speed_;
-    center_[1] -= s * speed_;
+SDL_Renderer* Asteroids::getRenderer() {
+    return SDL_GetRenderer(window_);
+}
 
-    changeData();
+void Asteroids::wrapCoordinates() {
+    SDL_FPoint res = {center_.x, center_.y};
+    int width;
+    int height;
+    SDL_GetWindowSize(window_, &width, &height);
+    if (center_.x < 0.) {
+        res.x = center_.x + (float)width;
+    }
+    if (center_.x >= (float)width) {
+        res.x = center_.x - (float)width;
+    }
+    if (center_.y < 0.) {
+        res.y = center_.y + (float)height;
+    }
+    if (center_.y >= (float)height) {
+        res.y = center_.y - (float)height;
+    }
+    center_ = res;
 }

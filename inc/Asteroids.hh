@@ -2,27 +2,26 @@
 #define ASTEROIDS_H
 
 #include <SDL.h>
-#include <stdlib.h>
-#include <time.h>
 
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
 
 #include "utilitaires.hh"
 
 class Asteroids {
-    SDL_Point data_[5];
-    float center_[2];
-    float angle_; // en degré
-    int rayon_;
-    float speed_;
+    SDL_Window* const window_;
+    SDL_FPoint center_;
+    float radius_;
+    SDL_FPoint speed_;
+    SDL_FPoint accel_;
 
    public:
-    Asteroids();
-    float getangle() const;
-    void drawdata(
-        SDL_Renderer* renderer) const; // dessine les lignes du vaisseau
-    void changeData();                 // dessine les lignes du vaisseau
-    void move(); // déplace le vaisseau selon l'angle angle_direction
+    Asteroids(SDL_Window*);
+    void draw();
+    void move();
+    SDL_Renderer* getRenderer();
+    void wrapCoordinates();
 };
 
 #endif // ASTEROIDS_H
