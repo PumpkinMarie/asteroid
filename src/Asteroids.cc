@@ -3,7 +3,13 @@
 #include <iostream>
 
 Asteroids::Asteroids(SDL_Window* window) : window_(window) {
-    speed_  = {1, 1};
+    float speedx = rand()%2;
+    float speedy = rand()%2;
+    if (speedx == 0)
+        speedx = - 1;
+    if (speedy == 0)
+        speedy = - 1;
+    speed_  = {speedx, speedy};
     accel_  = {0, 0};
     int width;
     int height;
