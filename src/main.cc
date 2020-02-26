@@ -30,7 +30,7 @@ int main() {
     }
     SDL_bool done = SDL_FALSE;
 
-    Ship ship;
+    Ship ship {window};
     std::vector<Bullet> Bullets;
 
     std::vector<Asteroids> asteroids;
@@ -67,9 +67,7 @@ int main() {
         for (auto b : Bullets)
             b.render_bullet(renderer);
 
-        SDL_RenderPresent(renderer);
-
-        ship.drawdata(renderer);
+        ship.draw();
 
         SDL_RenderPresent(renderer);
 
@@ -81,18 +79,18 @@ int main() {
             }
             if (event.type == SDL_KEYDOWN &&
                 event.key.keysym.sym == SDLK_LEFT) {
-                ship.rotation(1);
+                ship.rotation(2);
             }
             if (event.type == SDL_KEYDOWN &&
                 event.key.keysym.sym == SDLK_RIGHT) {
-                ship.rotation(2);
+                ship.rotation(1);
             }
             if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_UP) {
-                ship.change_speed(1);
+                ship.change_speed(0.1);
             }
             if (event.type == SDL_KEYDOWN &&
                 event.key.keysym.sym == SDLK_DOWN) {
-                ship.change_speed(-1);
+                ship.change_speed(0.1);
             }
             if (event.type == SDL_KEYDOWN &&
                 event.key.keysym.sym == SDLK_SPACE) {

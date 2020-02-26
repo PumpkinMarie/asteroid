@@ -4,63 +4,88 @@
 
 #include "utilitaires.hh"
 
-Ship::Ship() {
-    data_[0].x = 320;
-    data_[0].y = 240;
-    data_[1].x = 310;
-    data_[1].y = 220;
-    data_[2].x = 320;
-    data_[2].y = 225;
-    data_[3].x = 330;
-    data_[3].y = 220;
-    data_[4].x = 320;
-    data_[4].y = 240;
-
-    center_[0] = 320;
-    center_[1] = 240;
-
-    angle_      = 0;
-    angle_move_ = 0;
-    speed_      = 0;
+Ship::Ship(SDL_Window* w)
+    : window_(
+          w) { // fortement simplifié avec passage de la window pour facilité
+    /*     data_[0].x = 320;
+        data_[0].y = 240;
+        data_[1].x = 310;
+        data_[1].y = 220;
+        data_[2].x = 320;
+        data_[2].y = 225;
+        data_[3].x = 330;
+        data_[3].y = 220;
+        data_[4].x = 320;
+        data_[4].y = 240;
+     */
+    center_ = {320, 240};
+    speed_  = {0, 0};
+    angle_  = 0;
 }
 
-void Ship::drawdata(SDL_Renderer* renderer) const {
-    SDL_RenderDrawLines(renderer, data_, 5);
+void Ship::draw()
+    const { // transformations à récupérer pour les autres objets ça marche bien
+    SDL_Renderer* renderer = SDL_GetRenderer(window_);
+    float mx[3]            = {0.0f, -2.5f, +2.5f};
+    float my[3]            = {-5.5f, +2.5f, +2.5f};
+    float sx[3];
+    float sy[3];
+
+    // rotate
+    for (int i = 0; i < 3; i++) {
+        sx[i] = mx[i] * cosf(angle_) - my[i] * sinf(angle_);
+        sy[i] = mx[i] * sinf(angle_) + my[i] * cosf(angle_);
+    }
+    // scale
+    for (int i = 0; i < 3; i++) {
+        sx[i] = sx[i] * 2;
+        sy[i] = sy[i] * 2;
+    }
+    // translate
+    for (int i = 0; i < 3; i++) {
+        sx[i] += center_.x;
+        sy[i] += center_.y;
+    }
+    // draw
+    for (int i = 0; i < 4; i++) {
+        int j = i + 1;
+        SDL_RenderDrawLineF(
+            renderer, sx[i % 3], sy[i % 3], sx[j % 3], sy[j % 3]);
+    }
 }
 
-SDL_Point Ship::getdatafirst() const {
-    return data_[0];
+SDL_Point Ship::getdatafirst()
+    const { // à changer vu que data est calculé par le centre
+    return {0, 0};
 }
 
-float Ship::getangle() const {
+float Ship::getangle() const { // à vérifier si toujours utile
     return angle_;
 }
 
-void Ship::move() {
-    float c = cos(angle_move_ * M_PI / 180);
-    float s = sin(angle_move_ * M_PI / 180);
-
-    center_[0] = data_[0].x + c * speed_;
-    center_[1] = data_[0].y - s * speed_;
-
-    rotation_render();
+void Ship::move() { // apply speed change to ship
+    int width, height;
+    SDL_GetWindowSize(window_, &width, &height);
+    center_.x += speed_.x;
+    center_.y += speed_.y;
+    center_.x = wrap(center_.x, width);
+    center_.y = wrap(center_.y, height);
 }
 
 void Ship::rotation(int direction) {
-    int angle;
     switch (direction) {
         case 1:
-            angle = 5;
+            angle_ += M_PI / 23; // environ pi sur 6
             break;
         case 2:
-            angle = -5;
+            angle_ -= M_PI / 23;
             break;
         default:
             break;
     }
-    rotation_data(angle);
+    // rotation_data(angle);
 }
-
+/*
 void Ship::rotation_data(float angle) {
     angle_ = angle_ + angle;
     angle  = angle * M_PI / 180;
@@ -76,8 +101,8 @@ void Ship::rotation_data(float angle) {
     data_[2].y = mid_y + (data_[0].y - mid_y) / 3;
 
     angle_tmp_ = angle_move_;
-}
-
+}*/
+/*
 void Ship::rotation_render() {
     float angle = angle_ * M_PI / 180 + M_PI / 2;
 
@@ -123,14 +148,10 @@ void Ship::rotation_render() {
             val.x -= 480;
         }
 }
-
-void Ship::change_speed(int vitesse) {
+*/
+void Ship::change_speed(float vitesse) {
     // speed_+= vitesse*(1 - (angle_ - angle_move_));
-    speed_ = vitesse;
-    if (angle_move_ != angle_) {
-        angle_move_ += (angle_ - angle_tmp_) * 0.1 * speed_;
-        std::cout << angle_ << " " << angle_move_ << " " << angle_tmp_
-                  << std::endl;
-    }
+    speed_.x += sin(angle_) * vitesse;
+    speed_.y += -cos(angle_) * vitesse;
     move();
 }
