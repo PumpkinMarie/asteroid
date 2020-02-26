@@ -15,10 +15,13 @@ class Asteroids {
     float radius_;
     SDL_FPoint speed_;
     SDL_FPoint accel_;
+    SDL_FPoint data_[10]; 
+    int nb_points_ = 10; //nb de points sur le cercle qui forment la météorite
 
    public:
     Asteroids(SDL_Window*);
     void draw();
+    void changeData();
     void move();
     SDL_Renderer* getRenderer();
     void wrapCoordinates();

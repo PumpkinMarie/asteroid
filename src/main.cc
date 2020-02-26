@@ -30,6 +30,8 @@ int main() {
     }
     SDL_bool done = SDL_FALSE;
 
+    srand(time(NULL));
+
     Ship ship {window};
     std::vector<Bullet> Bullets;
 
