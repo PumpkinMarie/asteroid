@@ -4,13 +4,13 @@
 
 Asteroids::Asteroids(SDL_Window* window) : window_(window) {
     center_ = {30, 30};
-    radius_ = 16;
+    radius_ = 50;
     speed_  = {1, 2};
     accel_  = {0, 0};
 }
 
 void Asteroids::draw() {
-    SDL_RenderDrawCircleF(getRenderer(), center_, radius_);
+    SDL_RenderDrawCircleF(window_, center_, radius_);
 }
 
 void Asteroids::move() {
@@ -30,17 +30,7 @@ void Asteroids::wrapCoordinates() {
     int width;
     int height;
     SDL_GetWindowSize(window_, &width, &height);
-    if (center_.x < 0.) {
-        res.x = center_.x + (float)width;
-    }
-    if (center_.x >= (float)width) {
-        res.x = center_.x - (float)width;
-    }
-    if (center_.y < 0.) {
-        res.y = center_.y + (float)height;
-    }
-    if (center_.y >= (float)height) {
-        res.y = center_.y - (float)height;
-    }
+    res.x   = wrap(center_.x, width);
+    res.y   = wrap(center_.y, height);
     center_ = res;
 }

@@ -2,25 +2,35 @@
 
 #include <SDL.h>
 
-void SDL_RenderDrawCircleF(SDL_Renderer* r,
+void SDL_RenderDrawCircleF(SDL_Window* w,
     SDL_FPoint center,
     float radius) { // Midpoint Circle Algorithm
+    SDL_Renderer* r     = SDL_GetRenderer(w);
     const auto diameter = radius * 2.;
     float x             = (radius - 1.);
     float y             = 0;
     float tx            = 1;
     float ty            = 1;
     float error         = (tx - diameter);
-
+    int height, width;
+    SDL_GetWindowSize(w, &width, &height);
     while (x >= y) {
-        SDL_RenderDrawPointF(r, center.x + x, center.y - y);
-        SDL_RenderDrawPointF(r, center.x + x, center.y + y);
-        SDL_RenderDrawPointF(r, center.x - x, center.y - y);
-        SDL_RenderDrawPointF(r, center.x - x, center.y + y);
-        SDL_RenderDrawPointF(r, center.x + y, center.y - x);
-        SDL_RenderDrawPointF(r, center.x + y, center.y + x);
-        SDL_RenderDrawPointF(r, center.x - y, center.y - x);
-        SDL_RenderDrawPointF(r, center.x - y, center.y + x);
+        SDL_RenderDrawPointF(
+            r, wrap(center.x + x, width), wrap(center.y - y, height));
+        SDL_RenderDrawPointF(
+            r, wrap(center.x + x, width), wrap(center.y + y, height));
+        SDL_RenderDrawPointF(
+            r, wrap(center.x - x, width), wrap(center.y - y, height));
+        SDL_RenderDrawPointF(
+            r, wrap(center.x - x, width), wrap(center.y + y, height));
+        SDL_RenderDrawPointF(
+            r, wrap(center.x + y, width), wrap(center.y - x, height));
+        SDL_RenderDrawPointF(
+            r, wrap(center.x + y, width), wrap(center.y + x, height));
+        SDL_RenderDrawPointF(
+            r, wrap(center.x - y, width), wrap(center.y - x, height));
+        SDL_RenderDrawPointF(
+            r, wrap(center.x - y, width), wrap(center.y + x, height));
 
         if (error <= 0) {
             y++;
@@ -33,6 +43,15 @@ void SDL_RenderDrawCircleF(SDL_Renderer* r,
             error += (tx - diameter);
         }
     }
+}
+
+float wrap(float f, int limit) {
+    if (f < 0)
+        return f + limit;
+    else if (f >= (float)limit)
+        return f - limit;
+    else
+        return f;
 }
 
 SDL_Point Out_of_Screen(SDL_Point pos) {

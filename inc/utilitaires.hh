@@ -5,4 +5,5 @@
 
 SDL_Point Out_of_Screen(SDL_Point pos);
 void SDL_RenderDrawCircleF(
-    SDL_Renderer*, SDL_FPoint, float); // using Midpoint Circle Algorithm
+    SDL_Window*, SDL_FPoint, float); // using Midpoint Circle Algorithm
+float wrap(float x, int limit);
