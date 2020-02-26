@@ -9,11 +9,11 @@ class Ship {
     SDL_Window* const window_;
     SDL_FPoint center_;
     SDL_FPoint speed_;
-    float angle_; // en degré
+    float angle_; 
 
    public:
     Ship(SDL_Window*);
-    SDL_Point getdatafirst() const;
+    SDL_FPoint getcenter() const;
     float getangle() const;
     void draw() const; // dessine les lignes du vaisseau
     void move();       // déplace le vaisseau selon l'angle angle_direction

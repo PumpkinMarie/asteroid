@@ -10,10 +10,10 @@
 
 class Bullet {
    private:
-    SDL_Point source_;
-    SDL_Rect data_;
-    float direction_;
-    int time_;
+    SDL_FPoint source_; //origine du tir
+    SDL_FRect data_; //position et taille du tir
+    SDL_FPoint speed_; //angle et rapidité de déplacement du tir
+    int time_; //temps restant avant disparition
 
    public:
     Bullet(Ship ship);

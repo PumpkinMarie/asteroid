@@ -54,12 +54,12 @@ void Ship::draw()
     }
 }
 
-SDL_Point Ship::getdatafirst()
-    const { // à changer vu que data est calculé par le centre
-    return {0, 0};
+SDL_FPoint Ship::getcenter()
+    const { // renvoit le centre
+    return center_;
 }
 
-float Ship::getangle() const { // à vérifier si toujours utile
+float Ship::getangle() const { //toujours utile (pour les bullets)
     return angle_;
 }
 
