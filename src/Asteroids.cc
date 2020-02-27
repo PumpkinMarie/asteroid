@@ -5,6 +5,7 @@
 Asteroids::Asteroids(SDL_Window* window) : window_(window) {
     float speedx = rand()%3;
     float speedy = rand()%3;
+    //on vérifie que l'astéroide n'est pas à l'arrêt
     if (speedx-1 == 0 && speedy-1 == 0)
         speedx = 2;
     speed_  = {speedx-1, speedy-1};
@@ -14,9 +15,14 @@ Asteroids::Asteroids(SDL_Window* window) : window_(window) {
     SDL_GetWindowSize(window_, &width, &height);
     center_.x = rand()%width;
     center_.y = rand()%height;
-    radius_ = rand()%70+10;
+    radius_ = rand()%60+10;
 
     center_tmp = center_;
+    
+    for (int i=0;i<nb_points_;i+=2){
+        variations_[i] = radius_;
+        variations_[i+1] = rand()%int(radius_)+radius_/3;
+    }
 
     changeData();
 }
@@ -34,10 +40,18 @@ void Asteroids::draw() {
 }
 
 //init de points aléatoires formant l'enveloppe convexe de l'astéroide en fct du rayon
-void Asteroids::changeData() {
+/*void Asteroids::changeData() {
     for (int i=0;i<nb_points_;i++){
         data_[i] = {float(cos(i*2*M_PI/nb_points_))*radius_+center_.x,float(sin(i*2*M_PI/nb_points_))*radius_+center_.y};
         data_tmp[i] = {float(cos(i*2*M_PI/nb_points_))*radius_+center_tmp.x,float(sin(i*2*M_PI/nb_points_))*radius_+center_tmp.y};
+    }
+}*/
+
+//même fonction mais en ayant des points avec un rayon pouvant différer
+void Asteroids::changeData() {
+    for (int i=0;i<nb_points_;i++){
+        data_[i] = {float(cos(i*2*M_PI/nb_points_))*variations_[i]+center_.x,float(sin(i*2*M_PI/nb_points_))*variations_[i]+center_.y};
+        data_tmp[i] = {float(cos(i*2*M_PI/nb_points_))*variations_[i]+center_tmp.x,float(sin(i*2*M_PI/nb_points_))*variations_[i]+center_tmp.y};
     }
 }
 
