@@ -20,6 +20,8 @@ class Bullet {
     void move_bullet();
     int getTime() const;
     void render_bullet(SDL_Renderer* renderer);
+    bool onCollision(Asteroids a);
+
 };
 
 #endif // BULLET_H

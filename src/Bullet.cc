@@ -34,3 +34,16 @@ int Bullet::getTime() const {
 void Bullet::render_bullet(SDL_Renderer* renderer) {
     SDL_RenderFillRectF(renderer, &data_);
 }
+
+bool Bullet::onCollision(Asteroids a){
+
+    if (PointdansCercle(data_.x,data_.y,a.getCenter(), a.getRadius()))
+        return true;
+    if (PointdansCercle(data_.x+5,data_.y,a.getCenter(), a.getRadius()))
+        return true;
+    if (PointdansCercle(data_.x,data_.y+5,a.getCenter(), a.getRadius()))
+        return true;
+    if (PointdansCercle(data_.x+5,data_.y+5,a.getCenter(), a.getRadius()))
+        return true;    
+    return false; 
+}

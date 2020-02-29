@@ -64,7 +64,11 @@ int main() {
             a.move();
             a.draw();
             if (ship.onCollision(a))
+                std::cout<<"outch"<<std::endl;
                 //done = SDL_TRUE; //perte de vie à FAIRE
+            for (auto& b : Bullets)
+                if (b.onCollision(a))
+                std::cout<<"outch"<<std::endl; //destruction ou division de l'astéroide  
         }
 
         // Draw Bullets
