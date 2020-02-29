@@ -1,5 +1,6 @@
 #include "Asteroids.hh"
 
+
 #include <iostream>
 
 Asteroids::Asteroids(SDL_Window* window) : window_(window) {
@@ -35,6 +36,13 @@ float Asteroids::getRadius(){
     return radius_;
 }
 
+void Asteroids::destruct(){
+    dead_ = true;
+}
+
+bool Asteroids::isDead(){
+    return dead_;
+}
 
 void Asteroids::draw() {
     SDL_Renderer* renderer = SDL_GetRenderer(window_);

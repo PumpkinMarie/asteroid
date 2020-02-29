@@ -10,7 +10,7 @@
 #include "utilitaires.hh"
 
 class Asteroids {
-    SDL_Window* const window_;
+    SDL_Window* window_;
     SDL_FPoint center_;
     float radius_;
     SDL_FPoint speed_;
@@ -20,6 +20,7 @@ class Asteroids {
     SDL_FPoint data_tmp[10]; //copie de l'astéroide pour sa transition aux bords
     SDL_FPoint center_tmp; //copie du centre
     float variations_[10]; 
+    bool dead_=false;
 
    public:
     Asteroids(SDL_Window*);
@@ -30,6 +31,8 @@ class Asteroids {
     void move();
     SDL_Renderer* getRenderer();
     void wrapCoordinates();
+    void destruct();
+    bool isDead();
 };
 
 #endif // ASTEROIDS_H

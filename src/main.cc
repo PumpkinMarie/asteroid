@@ -60,15 +60,30 @@ int main() {
                 Bullets.erase(i);
         }
 
+        if (asteroids.size() > 0) {
+            auto i = remove_if(asteroids.begin(), asteroids.end(), [&](Asteroids a) {
+                return (a.isDead());
+            });
+            if (i != asteroids.end()){
+                asteroids.erase(i);
+            }
+        }
+
         for (auto& a : asteroids) {
             a.move();
             a.draw();
             if (ship.onCollision(a))
                 std::cout<<"outch"<<std::endl;
-                //done = SDL_TRUE; //perte de vie à FAIRE
-            for (auto& b : Bullets)
-                if (b.onCollision(a))
-                std::cout<<"outch"<<std::endl; //destruction ou division de l'astéroide  
+
+            if (Bullets.size() > 0) {
+            auto i = remove_if(Bullets.begin(), Bullets.end(), [&](Bullet b) {
+                return (b.onCollision(a));
+            });
+            if (i != Bullets.end()){
+                Bullets.erase(i);
+                a.destruct();
+            }
+        }
         }
 
         // Draw Bullets
