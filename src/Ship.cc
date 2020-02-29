@@ -155,3 +155,32 @@ void Ship::change_speed(float vitesse) {
     speed_.y += -cos(angle_) * vitesse;
     move();
 }
+
+bool Ship::onCollision(Asteroids a){
+    float mx[3]            = {0.0f, -2.5f, +2.5f};
+    float my[3]            = {-5.5f, +2.5f, +2.5f};
+    float sx[3];
+    float sy[3];
+
+    // rotate
+    for (int i = 0; i < 3; i++) {
+        sx[i] = mx[i] * cosf(angle_) - my[i] * sinf(angle_);
+        sy[i] = mx[i] * sinf(angle_) + my[i] * cosf(angle_);
+    }
+    // scale
+    for (int i = 0; i < 3; i++) {
+        sx[i] = sx[i] * 2;
+        sy[i] = sy[i] * 2;
+    }
+    // translate
+    for (int i = 0; i < 3; i++) {
+        sx[i] += center_.x;
+        sy[i] += center_.y;
+    }
+    // draw
+    for (int i = 0; i < 3; i++) {
+        if (PointdansCercle(sx[i],sy[i],a.getCenter(), a.getRadius()))
+            return true;
+    }
+    return false; 
+}

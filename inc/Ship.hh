@@ -4,6 +4,7 @@
 #include <SDL.h>
 
 #include <cmath>
+#include "Asteroids.hh"
 
 class Ship {
     SDL_Window* const window_;
@@ -21,6 +22,7 @@ class Ship {
     // void rotation_data(float angle);
     // void rotation_render();
     void change_speed(float vitesse);
+    bool onCollision(Asteroids a);
 };
 
 #endif // SHIP_H

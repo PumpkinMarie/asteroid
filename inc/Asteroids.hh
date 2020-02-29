@@ -23,6 +23,8 @@ class Asteroids {
 
    public:
     Asteroids(SDL_Window*);
+    SDL_FPoint getCenter();
+    float getRadius();
     void draw();
     void changeData();
     void move();

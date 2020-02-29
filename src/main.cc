@@ -63,6 +63,8 @@ int main() {
         for (auto& a : asteroids) {
             a.move();
             a.draw();
+            if (ship.onCollision(a))
+                //done = SDL_TRUE; //perte de vie à FAIRE
         }
 
         // Draw Bullets

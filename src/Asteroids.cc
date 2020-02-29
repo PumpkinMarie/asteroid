@@ -27,6 +27,15 @@ Asteroids::Asteroids(SDL_Window* window) : window_(window) {
     changeData();
 }
 
+SDL_FPoint Asteroids::getCenter(){
+    return center_;
+}
+
+float Asteroids::getRadius(){
+    return radius_;
+}
+
+
 void Asteroids::draw() {
     SDL_Renderer* renderer = SDL_GetRenderer(window_);
     for (int i = 0; i < nb_points_; i++) {
