@@ -13,8 +13,8 @@ Bullet::Bullet(Ship ship) {
     data_.w    = 5;
 
     float direction = ship.getangle();
-    speed_.x = sin(direction);
-    speed_.y = -cos(direction);
+    speed_.x = sin(direction) + ship.getspeed().x;
+    speed_.y = -cos(direction) + ship.getspeed().y;
     }
 
 void Bullet::move_bullet() {

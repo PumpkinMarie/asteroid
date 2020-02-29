@@ -16,6 +16,7 @@ class Ship {
     Ship(SDL_Window*);
     SDL_FPoint getcenter() const;
     float getangle() const;
+    SDL_FPoint getspeed() const;
     void draw() const; // dessine les lignes du vaisseau
     void move();       // déplace le vaisseau selon l'angle angle_direction
     void rotation(int direction);

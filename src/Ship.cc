@@ -23,6 +23,11 @@ Ship::Ship(SDL_Window* w)
     angle_  = 0;
 }
 
+SDL_FPoint Ship::getspeed() const{
+    return speed_;
+}
+
+
 void Ship::draw()
     const { // transformations à récupérer pour les autres objets ça marche bien
     SDL_Renderer* renderer = SDL_GetRenderer(window_);
