@@ -60,14 +60,18 @@ int main() {
                 Bullets.erase(i);
         }
 
-        if (asteroids.size() > 0) {
-            auto i = remove_if(asteroids.begin(), asteroids.end(), [&](Asteroids a) {
-                return (a.isDead());
-            });
-            if (i != asteroids.end()){
-                asteroids.erase(i);
+        for (int i = 0; i<asteroids.size();i++){
+            if (asteroids[i].isDead()){
+                float division = asteroids[i].getRadius()/2;
+                SDL_FPoint center = asteroids[i].getCenter();
+                if (division > 10){
+                    asteroids.push_back(Asteroids {window,division,center});
+                    asteroids.push_back(Asteroids {window,division,center});
+                }
+                asteroids.erase(asteroids.begin()+i);
             }
         }
+
 
         for (auto& a : asteroids) {
             a.move();
