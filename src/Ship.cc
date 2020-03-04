@@ -23,6 +23,11 @@ Ship::Ship(SDL_Window* w)
     angle_  = 0;
 }
 
+SDL_FPoint Ship::getspeed() const{
+    return speed_;
+}
+
+
 void Ship::draw()
     const { // transformations à récupérer pour les autres objets ça marche bien
     SDL_Renderer* renderer = SDL_GetRenderer(window_);
@@ -154,4 +159,30 @@ void Ship::change_speed(float vitesse) {
     speed_.x += sin(angle_) * vitesse;
     speed_.y += -cos(angle_) * vitesse;
     move();
+}
+
+bool Ship::onCollision(Asteroids a){
+    float mx[3]            = {0.0f, -2.5f, +2.5f};
+    float my[3]            = {-5.5f, +2.5f, +2.5f};
+    float sx[3];
+    float sy[3];
+
+    for (int i = 0; i < 3; i++) {
+        sx[i] = mx[i] * cosf(angle_) - my[i] * sinf(angle_);
+        sy[i] = mx[i] * sinf(angle_) + my[i] * cosf(angle_);
+    }
+    for (int i = 0; i < 3; i++) {
+        sx[i] = sx[i] * 2;
+        sy[i] = sy[i] * 2;
+    }
+    for (int i = 0; i < 3; i++) {
+        sx[i] += center_.x;
+        sy[i] += center_.y;
+    }
+
+    for (int i = 0; i < 3; i++) {
+        if (PointdansCercle(sx[i],sy[i],a.getCenter(), a.getRadius()))
+            return true;
+    }
+    return false; 
 }

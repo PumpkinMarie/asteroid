@@ -60,9 +60,34 @@ int main() {
                 Bullets.erase(i);
         }
 
+        for (int i = 0; i<asteroids.size();i++){
+            if (asteroids[i].isDead()){
+                float division = asteroids[i].getRadius()/2;
+                SDL_FPoint center = asteroids[i].getCenter();
+                if (division > 10){
+                    asteroids.push_back(Asteroids {window,division,center});
+                    asteroids.push_back(Asteroids {window,division,center});
+                }
+                asteroids.erase(asteroids.begin()+i);
+            }
+        }
+
+
         for (auto& a : asteroids) {
             a.move();
             a.draw();
+            if (ship.onCollision(a))
+                std::cout<<"outch"<<std::endl;
+
+            if (Bullets.size() > 0) {
+            auto i = remove_if(Bullets.begin(), Bullets.end(), [&](Bullet b) {
+                return (b.onCollision(a));
+            });
+            if (i != Bullets.end()){
+                Bullets.erase(i);
+                a.destruct();
+            }
+        }
         }
 
         // Draw Bullets
