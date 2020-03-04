@@ -27,6 +27,12 @@ SDL_FPoint Ship::getspeed() const{
     return speed_;
 }
 
+void Ship::backtothecenter(){
+    center_ = {320, 240};
+    speed_ = {0, 0};
+    angle_  = 0;
+}
+
 
 void Ship::draw()
     const { // transformations à récupérer pour les autres objets ça marche bien
@@ -43,8 +49,8 @@ void Ship::draw()
     }
     // scale
     for (int i = 0; i < 3; i++) {
-        sx[i] = sx[i] * 2;
-        sy[i] = sy[i] * 2;
+        sx[i] = sx[i] * 3;
+        sy[i] = sy[i] * 3;
     }
     // translate
     for (int i = 0; i < 3; i++) {

@@ -8,6 +8,7 @@
 #include "Bullet.hh"
 #include "Ship.hh"
 #include "utilitaires.hh"
+#include "Game.hh"
 
 int main() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -31,6 +32,9 @@ int main() {
     SDL_bool done = SDL_FALSE;
 
     srand(time(NULL));
+
+    Game game {window}; 
+    bool ship_spawn = false; //savoir si le vaisseau attend l'appui par le joueur pour spawn
 
     Ship ship {window};
     std::vector<Bullet> Bullets;
@@ -76,9 +80,15 @@ int main() {
         for (auto& a : asteroids) {
             a.move();
             a.draw();
-            if (ship.onCollision(a))
-                std::cout<<"outch"<<std::endl;
-
+            //Work in progress
+            if (!ship_spawn && ship.onCollision(a)){
+                game.lostLife();
+                ship_spawn = true;
+                ship.backtothecenter();
+                std::cout<<game.getLives()<<std::endl;
+                if (game.getLives() == 0)
+                    done = SDL_TRUE;        
+            }
             if (Bullets.size() > 0) {
             auto i = remove_if(Bullets.begin(), Bullets.end(), [&](Bullet b) {
                 return (b.onCollision(a));
@@ -94,7 +104,8 @@ int main() {
         for (auto b : Bullets)
             b.render_bullet(renderer);
 
-        ship.draw();
+        if (!ship_spawn)
+            ship.draw();
 
         SDL_RenderPresent(renderer);
 
@@ -104,24 +115,30 @@ int main() {
             if (event.type == SDL_QUIT) {
                 done = SDL_TRUE;
             }
-            if (event.type == SDL_KEYDOWN &&
-                event.key.keysym.sym == SDLK_LEFT) {
-                ship.rotation(2);
+            if (!ship_spawn){
+                if (event.type == SDL_KEYDOWN &&
+                    event.key.keysym.sym == SDLK_LEFT) {
+                    ship.rotation(2);
+                }
+                if (event.type == SDL_KEYDOWN &&
+                    event.key.keysym.sym == SDLK_RIGHT) {
+                    ship.rotation(1);
+                }
+                if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_UP) {
+                    ship.change_speed(0.1);
+                }
+                if (event.type == SDL_KEYDOWN &&
+                    event.key.keysym.sym == SDLK_DOWN) {
+                    ship.change_speed(0.1);
+                }
+                if (event.type == SDL_KEYDOWN &&
+                    event.key.keysym.sym == SDLK_SPACE) {
+                    Bullets.push_back({ship});
+                }
             }
-            if (event.type == SDL_KEYDOWN &&
-                event.key.keysym.sym == SDLK_RIGHT) {
-                ship.rotation(1);
-            }
-            if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_UP) {
-                ship.change_speed(0.1);
-            }
-            if (event.type == SDL_KEYDOWN &&
-                event.key.keysym.sym == SDLK_DOWN) {
-                ship.change_speed(0.1);
-            }
-            if (event.type == SDL_KEYDOWN &&
+            if (ship_spawn && event.type == SDL_KEYDOWN &&
                 event.key.keysym.sym == SDLK_SPACE) {
-                Bullets.push_back({ship});
+                    ship_spawn = false;
             }
         }
         ship.move();
