@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <SDL.h>
+#include <cmath>
 
 class Game {
     SDL_Window* const window_;

@@ -6,7 +6,7 @@
 
 Bullet::Bullet(Ship ship) {
     source_    = ship.getcenter();
-    time_      = 500;
+    time_      = 400;
     data_.x    = source_.x;
     data_.y    = source_.y-5.5f; //tir venant de la pointe du vaisseau pas du centre
     data_.h    = 5;

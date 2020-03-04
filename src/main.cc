@@ -52,6 +52,9 @@ int main() {
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
+
+        game.drawLives();
+
         // Update Bullets
         for (auto& b : Bullets)
             b.move_bullet();
