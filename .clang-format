@@ -9,13 +9,11 @@ AlignConsecutiveAssignments: true
 AlignEscapedNewlines: Left
 AlignTrailingComments: true
 AllowShortLoopsOnASingleLine: false
-AllowShortLambdasOnASingleLine: true
 AllowShortIfStatementsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: false
 AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
-AlwaysBreakTemplateDeclarations: Yes
 BinPackArguments: false 
 BinPackParameters: false
 BreakBeforeBraces: Attach
@@ -28,6 +26,5 @@ IndentCaseLabels: true
 IndentPPDirectives: AfterHash
 SortIncludes: true
 ReflowComments: true
-SpaceBeforeCpp11BracedList: true
 
 ...

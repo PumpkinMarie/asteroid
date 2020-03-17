@@ -72,3 +72,4 @@ SDL_Point Out_of_Screen(SDL_Point pos) {
 bool PointdansCercle(float px, float py,SDL_FPoint center, float radius){
     return sqrt((px-center.x)*(px-center.x) + (py-center.y)*(py-center.y)) < radius;
 }
+
