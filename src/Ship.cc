@@ -4,9 +4,8 @@
 
 #include "utilitaires.hh"
 
-Ship::Ship(SDL_Window* w)
-    : window_(
-          w) { // fortement simplifié avec passage de la window pour facilité
+Ship::Ship(SDL_Window*
+        w) { // fortement simplifié avec passage de la window pour facilité
     /*     data_[0].x = 320;
         data_[0].y = 240;
         data_[1].x = 310;
@@ -18,6 +17,7 @@ Ship::Ship(SDL_Window* w)
         data_[4].x = 320;
         data_[4].y = 240;
      */
+    window_ = w;
     center_ = {320, 240};
     speed_  = {0, 0};
     angle_  = 0;
@@ -62,10 +62,6 @@ void Ship::draw()
         SDL_RenderDrawLineF(
             renderer, sx[i % 3], sy[i % 3], sx[j % 3], sy[j % 3]);
     }
-}
-
-SDL_FPoint Ship::getCenter() const { // renvoit le centre
-    return center_;
 }
 
 float Ship::getangle() const { // toujours utile (pour les bullets)

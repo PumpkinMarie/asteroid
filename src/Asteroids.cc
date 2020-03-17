@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-Asteroids::Asteroids(SDL_Window* window) : window_(window) {
+Asteroids::Asteroids(SDL_Window* window) {
+    window_      = window;
     float speedx = rand() % 3;
     float speedy = rand() % 3;
     // on vérifie que l'astéroide n'est pas à l'arrêt
@@ -27,8 +28,8 @@ Asteroids::Asteroids(SDL_Window* window) : window_(window) {
     changeData();
 }
 
-Asteroids::Asteroids(SDL_Window* window, float radiusMax, SDL_FPoint center)
-    : window_(window) {
+Asteroids::Asteroids(SDL_Window* window, float radiusMax, SDL_FPoint center) {
+    window_      = window;
     float speedx = rand() % 3;
     float speedy = rand() % 3;
     // on vérifie que l'astéroide n'est pas à l'arrêt
@@ -53,10 +54,6 @@ Asteroids::Asteroids(SDL_Window* window, float radiusMax, SDL_FPoint center)
     changeData();
 }
 
-SDL_FPoint Asteroids::getCenter() const {
-    return center_;
-}
-
 float Asteroids::getRadius() {
     return radius_;
 }
@@ -69,7 +66,7 @@ bool Asteroids::isDead() {
     return dead_;
 }
 
-void Asteroids::draw() {
+void Asteroids::draw() const {
     SDL_Renderer* renderer = SDL_GetRenderer(window_);
     for (int i = 0; i < nb_points_; i++) {
         int j = i + 1;

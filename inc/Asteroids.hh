@@ -11,10 +11,7 @@
 #include "utilitaires.hh"
 
 class Asteroids : public MovingObject {
-    SDL_Window* window_;
-    SDL_FPoint center_;
     float radius_;
-    SDL_FPoint speed_;
     SDL_FPoint accel_;
     int nb_points_ = 10; // nb de points sur le cercle qui forment la météorite
     SDL_FPoint data_[10];
@@ -27,11 +24,10 @@ class Asteroids : public MovingObject {
    public:
     Asteroids(SDL_Window*);
     Asteroids(SDL_Window*, float radiusMax, SDL_FPoint center);
-    SDL_FPoint getCenter() const;
     float getRadius();
-    void draw();
+    void draw() const override;
     void changeData();
-    void move();
+    void move() override;
     SDL_Renderer* getRenderer();
     void wrapCoordinates();
     void destruct();
