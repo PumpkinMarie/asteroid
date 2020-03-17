@@ -134,5 +134,16 @@ void Game::drawScore() const {
     int width;
     int height;
     SDL_GetWindowSize(window_, &width, &height);
-    drawexclam(window_, width - 20, 20, 54 - 32);
+
+    long int score = score_;
+    int chiffre    = score % 10;
+    // score max
+    if (score > 1000000000)
+        score = 1000000000;
+    do {
+        chiffre = score % 10;
+        drawexclam(window_, width - 20, 10, 48 + chiffre - 32);
+        width -= 20;
+        score /= 10;
+    } while (score != 0);
 }
