@@ -23,16 +23,15 @@ Ship::Ship(SDL_Window* w)
     angle_  = 0;
 }
 
-SDL_FPoint Ship::getspeed() const{
+SDL_FPoint Ship::getspeed() const {
     return speed_;
 }
 
-void Ship::backtothecenter(){
+void Ship::backtothecenter() {
     center_ = {320, 240};
-    speed_ = {0, 0};
+    speed_  = {0, 0};
     angle_  = 0;
 }
-
 
 void Ship::draw()
     const { // transformations à récupérer pour les autres objets ça marche bien
@@ -65,12 +64,11 @@ void Ship::draw()
     }
 }
 
-SDL_FPoint Ship::getcenter()
-    const { // renvoit le centre
+SDL_FPoint Ship::getCenter() const { // renvoit le centre
     return center_;
 }
 
-float Ship::getangle() const { //toujours utile (pour les bullets)
+float Ship::getangle() const { // toujours utile (pour les bullets)
     return angle_;
 }
 
@@ -167,9 +165,9 @@ void Ship::change_speed(float vitesse) {
     move();
 }
 
-bool Ship::onCollision(Asteroids a){
-    float mx[3]            = {0.0f, -2.5f, +2.5f};
-    float my[3]            = {-5.5f, +2.5f, +2.5f};
+bool Ship::onCollision(Asteroids a) {
+    float mx[3] = {0.0f, -2.5f, +2.5f};
+    float my[3] = {-5.5f, +2.5f, +2.5f};
     float sx[3];
     float sy[3];
 
@@ -187,8 +185,8 @@ bool Ship::onCollision(Asteroids a){
     }
 
     for (int i = 0; i < 3; i++) {
-        if (PointdansCercle(sx[i],sy[i],a.getCenter(), a.getRadius()))
+        if (PointdansCercle(sx[i], sy[i], a.getCenter(), a.getRadius()))
             return true;
     }
-    return false; 
+    return false;
 }

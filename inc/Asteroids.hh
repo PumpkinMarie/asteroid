@@ -7,25 +7,27 @@
 #include <cstdlib>
 #include <ctime>
 
+#include "MovingObject.hh"
 #include "utilitaires.hh"
 
-class Asteroids {
+class Asteroids : public MovingObject {
     SDL_Window* window_;
     SDL_FPoint center_;
     float radius_;
     SDL_FPoint speed_;
     SDL_FPoint accel_;
-    int nb_points_ = 10; //nb de points sur le cercle qui forment la météorite
-    SDL_FPoint data_[10]; 
-    SDL_FPoint data_copie[10]; //copie de l'astéroide pour sa transition aux bords
-    SDL_FPoint center_copie; //copie du centre
-    float variations_[10]; 
-    bool dead_=false;
+    int nb_points_ = 10; // nb de points sur le cercle qui forment la météorite
+    SDL_FPoint data_[10];
+    SDL_FPoint
+        data_copie[10]; // copie de l'astéroide pour sa transition aux bords
+    SDL_FPoint center_copie; // copie du centre
+    float variations_[10];
+    bool dead_ = false;
 
    public:
     Asteroids(SDL_Window*);
-    Asteroids(SDL_Window*,float radiusMax,SDL_FPoint center);
-    SDL_FPoint getCenter();
+    Asteroids(SDL_Window*, float radiusMax, SDL_FPoint center);
+    SDL_FPoint getCenter() const;
     float getRadius();
     void draw();
     void changeData();

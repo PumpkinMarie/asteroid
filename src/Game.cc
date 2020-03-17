@@ -50,3 +50,40 @@ void Game::drawLives() const{
     }
 
 }
+
+void drawZero(int x, int y, SDL_Window* window){
+    SDL_Renderer* renderer = SDL_GetRenderer(window);
+    float mx[4]            = {-2.5f, -2.5f, +2.5f, +2.5f};
+    float my[4]            = {-5.5f, +5.5f, +5.5f, -5.5f};
+    float sx[4];
+    float sy[4];
+
+    // rotate
+    for (int i = 0; i < 4; i++) {
+        sx[i] = mx[i] * cosf(0) - my[i] * sinf(0);
+        sy[i] = mx[i] * sinf(0) + my[i] * cosf(0);
+    }
+    // scale
+    for (int i = 0; i < 4; i++) {
+        sx[i] = sx[i] * 3;
+        sy[i] = sy[i] * 3;
+    }
+    // translate
+    for (int i = 0; i < 4; i++) {
+        sx[i] += x;
+        sy[i] += y;
+    }
+    // draw
+    for (int i = 0; i < 5; i++) {
+        int j = i + 1;
+        SDL_RenderDrawLineF(
+            renderer, sx[i % 4], sy[i % 4], sx[j % 4], sy[j % 4]);
+    }
+}
+
+void Game::drawScore() const{
+    int width;
+    int height;
+    SDL_GetWindowSize(window_, &width, &height);
+    drawZero(width-20,20,window_);
+}

@@ -4,17 +4,19 @@
 #include <SDL.h>
 
 #include <cmath>
-#include "Asteroids.hh"
 
-class Ship {
+#include "Asteroids.hh"
+#include "MovingObject.hh"
+
+class Ship : public MovingObject {
     SDL_Window* const window_;
     SDL_FPoint center_;
     SDL_FPoint speed_;
-    float angle_; 
+    float angle_;
 
    public:
     Ship(SDL_Window*);
-    SDL_FPoint getcenter() const;
+    SDL_FPoint getCenter() const;
     float getangle() const;
     SDL_FPoint getspeed() const;
     void backtothecenter();
