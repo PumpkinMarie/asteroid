@@ -2,11 +2,15 @@
 
 #include <iostream>
 
+#include "random.hh"
+
 Asteroids::Asteroids(SDL_Window* window, float radiusMax) {
     int width, height;
     SDL_GetWindowSize(window, &width, &height);
-    *this = Asteroids(
-        window, radiusMax, {(float)(rand() % width), (float)(rand() % height)});
+    *this = Asteroids(window,
+        radiusMax,
+        {getRandom(0.0f, static_cast<float>(width)),
+            getRandom(0.0f, static_cast<float>(height))});
 }
 
 Asteroids::Asteroids(SDL_Window* window, float radiusMax, SDL_FPoint center) {

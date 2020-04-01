@@ -2,6 +2,8 @@
 
 #include <SDL.h>
 
+#include <cmath>
+
 void SDL_RenderDrawCircleF(SDL_Window* w,
     SDL_FPoint center,
     float radius) { // Midpoint Circle Algorithm
@@ -69,7 +71,7 @@ SDL_Point Out_of_Screen(SDL_Point pos) {
     return pos2;
 }
 
-bool PointdansCercle(float px, float py,SDL_FPoint center, float radius){
-    return sqrt((px-center.x)*(px-center.x) + (py-center.y)*(py-center.y)) < radius;
+bool PointdansCercle(float px, float py, SDL_FPoint center, float radius) {
+    return sqrt((px - center.x) * (px - center.x) +
+                (py - center.y) * (py - center.y)) < radius;
 }
-
