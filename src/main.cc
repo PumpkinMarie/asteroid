@@ -101,6 +101,7 @@ int main() {
                 if (i != Bullets.end()) {
                     Bullets.erase(i);
                     a.destruct();
+                    game.score(Asteroids::RADIUS_MAX / a.getRadius() * 10);
                 }
             }
         }

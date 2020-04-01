@@ -11,12 +11,13 @@
 class Game {
     SDL_Window* const window_;
     int lives_      = 6;
-    long int score_ = 235344565;
+    long int score_ = 0;
 
    public:
     Game(SDL_Window*);
     int getLives() const;
     void lostLife();
+    void score(const int points);
     void drawLives() const;
     void drawScore() const;
 };

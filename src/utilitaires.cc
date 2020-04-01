@@ -50,7 +50,7 @@ void SDL_RenderDrawCircleF(SDL_Window* w,
 float wrap(float f, int limit) {
     if (f < 0)
         return f + limit;
-    else if (f >= (float)limit)
+    else if (f >= static_cast<float>(limit))
         return f - limit;
     else
         return f;

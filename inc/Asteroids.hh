@@ -13,17 +13,18 @@
 class Asteroids : public MovingObject {
     float radius_;
     SDL_FPoint accel_;
-    static const int outerVerticesLen_ =
+    static const int OUTER_VERTICES_LEN =
         10; // nb de points sur le cercle qui forment la météorite
-    SDL_FPoint outerVertices_[outerVerticesLen_];
-    SDL_FPoint verticesCopy_[outerVerticesLen_]; // copie de l'astéroide pour sa
-                                                 // transition aux bords
-    SDL_FPoint centerCopie_; // copie du centre
-    float variations_[outerVerticesLen_];
+    SDL_FPoint outerVertices_[OUTER_VERTICES_LEN];
+    SDL_FPoint verticesCopy_[OUTER_VERTICES_LEN]; // copie de l'astéroide pour
+                                                  // sa transition aux bords
+    SDL_FPoint centerCopie_;                      // copie du centre
+    float variations_[OUTER_VERTICES_LEN];
     bool dead_ = false;
 
    public:
-    Asteroids(SDL_Window*, float radiusMax = 60.);
+    constexpr static const float RADIUS_MAX = 60.;
+    Asteroids(SDL_Window*, float radiusMax = RADIUS_MAX);
     Asteroids(SDL_Window*, float radiusMax, SDL_FPoint center);
     float getRadius();
     void draw() const override;

@@ -15,8 +15,8 @@ Asteroids::Asteroids(SDL_Window* window, float radiusMax) {
 
 Asteroids::Asteroids(SDL_Window* window, float radiusMax, SDL_FPoint center) {
     window_      = window;
-    float speedx = rand() % 3;
-    float speedy = rand() % 3;
+    float speedx = getRandom(0.0f, 3.0f);
+    float speedy = getRandom(0.0f, 3.0f);
     // on vérifie que l'astéroide n'est pas à l'arrêt
     if (speedx - 1 == 0 && speedy - 1 == 0)
         speedx = 2;
@@ -31,9 +31,9 @@ Asteroids::Asteroids(SDL_Window* window, float radiusMax, SDL_FPoint center) {
 
     centerCopie_ = center_;
 
-    for (int i = 0; i < outerVerticesLen_; i += 2) {
+    for (int i = 0; i < OUTER_VERTICES_LEN; i += 2) {
         variations_[i]     = radius_;
-        variations_[i + 1] = rand() % int(radius_) + radius_ / 3;
+        variations_[i + 1] = getRandom(0.0f, radius_ + radius_ / 3);
     }
 
     changeData();
@@ -53,26 +53,26 @@ bool Asteroids::isDead() {
 
 void Asteroids::draw() const {
     SDL_Renderer* renderer = SDL_GetRenderer(window_);
-    for (int i = 0; i < outerVerticesLen_; i++) {
+    for (int i = 0; i < OUTER_VERTICES_LEN; i++) {
         int j = i + 1;
         SDL_RenderDrawLineF(renderer,
-            outerVertices_[i % outerVerticesLen_].x,
-            outerVertices_[i % outerVerticesLen_].y,
-            outerVertices_[j % outerVerticesLen_].x,
-            outerVertices_[j % outerVerticesLen_].y);
+            outerVertices_[i % OUTER_VERTICES_LEN].x,
+            outerVertices_[i % OUTER_VERTICES_LEN].y,
+            outerVertices_[j % OUTER_VERTICES_LEN].x,
+            outerVertices_[j % OUTER_VERTICES_LEN].y);
         SDL_RenderDrawLineF(renderer,
-            verticesCopy_[i % outerVerticesLen_].x,
-            verticesCopy_[i % outerVerticesLen_].y,
-            verticesCopy_[j % outerVerticesLen_].x,
-            verticesCopy_[j % outerVerticesLen_].y);
+            verticesCopy_[i % OUTER_VERTICES_LEN].x,
+            verticesCopy_[i % OUTER_VERTICES_LEN].y,
+            verticesCopy_[j % OUTER_VERTICES_LEN].x,
+            verticesCopy_[j % OUTER_VERTICES_LEN].y);
     }
 }
 
 // init de points aléatoires formant l'enveloppe convexe de l'astéroide en fct
 // du rayon
 void Asteroids::changeData() {
-    for (int i = 0; i < outerVerticesLen_; i++) {
-        float angle       = i * 2 * M_PI / outerVerticesLen_;
+    for (int i = 0; i < OUTER_VERTICES_LEN; i++) {
+        float angle       = i * 2 * M_PI / OUTER_VERTICES_LEN;
         float cosA        = float(std::cos(angle)) * variations_[i];
         float sinA        = float(sin(angle)) * variations_[i];
         outerVertices_[i] = {cosA + center_.x, sinA + center_.y};

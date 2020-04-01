@@ -53,6 +53,10 @@ void Game::drawLives() const {
     }
 }
 
+void Game::score(const int points) {
+    score_ += points;
+}
+
 void drawZero(int x, int y, SDL_Window* window) {
     SDL_Renderer* renderer = SDL_GetRenderer(window);
     float mx[4]            = {-2.5f, -2.5f, +2.5f, +2.5f};
