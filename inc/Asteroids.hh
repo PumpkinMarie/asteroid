@@ -24,7 +24,7 @@ class Asteroids : public MovingObject {
 
    public:
     constexpr static const float RADIUS_MAX = 60.;
-    Asteroids(SDL_Window*, float radiusMax = RADIUS_MAX);
+    Asteroids(SDL_Window*, SDL_FPoint shipCenter, float radiusMax = RADIUS_MAX);
     Asteroids(SDL_Window*, float radiusMax, SDL_FPoint center);
     float getRadius();
     void draw() const override;

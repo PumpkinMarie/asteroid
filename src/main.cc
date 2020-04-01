@@ -8,6 +8,7 @@
 #include "Bullet.hh"
 #include "Game.hh"
 #include "Ship.hh"
+#include "random.hh"
 #include "utilitaires.hh"
 
 int main() {
@@ -19,8 +20,8 @@ int main() {
     }
     SDL_Window* window;
     SDL_Renderer* renderer;
-    if (SDL_CreateWindowAndRenderer(640,
-            480,
+    if (SDL_CreateWindowAndRenderer(1900,
+            1080,
             SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE,
             &window,
             &renderer)) {
@@ -41,9 +42,9 @@ int main() {
     std::vector<Bullet> Bullets;
 
     std::vector<Asteroids> asteroids;
-    asteroids.push_back(Asteroids{window});
-    asteroids.push_back(Asteroids{window});
-
+    for (int i = 0; i < getRandom(15, 20); i++) {
+        asteroids.push_back(Asteroids{window, ship->getCenter()});
+    }
     while (!done) // display loop
     {
         SDL_Event event;
@@ -89,7 +90,7 @@ int main() {
             if (!ship_spawn && ship->onCollision(a)) {
                 game.lostLife();
                 ship_spawn = true;
-                ship->backtothecenter();
+                ship->placeCenter();
                 std::cout << game.getLives() << std::endl;
                 if (game.getLives() == 0)
                     done = SDL_TRUE;

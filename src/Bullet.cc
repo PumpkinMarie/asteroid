@@ -23,7 +23,6 @@ void Bullet::move_bullet() {
 
     data_.x += speed_.x;
     data_.y += speed_.y;
-
     data_.x = wrap(data_.x, 640);
     data_.y = wrap(data_.y, 480);
 }

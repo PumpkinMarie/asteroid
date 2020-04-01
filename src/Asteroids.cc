@@ -4,13 +4,30 @@
 
 #include "random.hh"
 
-Asteroids::Asteroids(SDL_Window* window, float radiusMax) {
+Asteroids::Asteroids(
+    SDL_Window* window, SDL_FPoint shipCenter, float radiusMax) {
     int width, height;
     SDL_GetWindowSize(window, &width, &height);
-    *this = Asteroids(window,
-        radiusMax,
-        {getRandom(0.0f, static_cast<float>(width)),
-            getRandom(0.0f, static_cast<float>(height))});
+    int side = getRandom(0, 3);
+    SDL_FPoint place;
+    if (side == 0) { // south
+        place.x = getRandom(shipCenter.x + Asteroids::RADIUS_MAX * 2,
+            static_cast<float>(width));
+        place.y = getRandom(0.0f, static_cast<float>(height));
+    } else if (side == 1) { // north
+        place.x = getRandom(0.0f, shipCenter.x - Asteroids::RADIUS_MAX * 2);
+        place.y = getRandom(0.0f, static_cast<float>(height));
+    } else if (side == 2) { // est
+        place.x = getRandom(0.0f, static_cast<float>(width));
+        place.y = getRandom(shipCenter.y + Asteroids::RADIUS_MAX * 2,
+            static_cast<float>(height));
+    } else if (side == 3) { // west
+        place.x = getRandom(0.0f, static_cast<float>(width));
+        place.y = getRandom(0.0f, shipCenter.y - Asteroids::RADIUS_MAX * 2);
+    } else {
+        printf("wow je suis con");
+    }
+    *this = Asteroids(window, radiusMax, place);
 }
 
 Asteroids::Asteroids(SDL_Window* window, float radiusMax, SDL_FPoint center) {

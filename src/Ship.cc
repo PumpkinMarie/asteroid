@@ -6,29 +6,18 @@
 
 Ship::Ship(SDL_Window*
         w) { // fortement simplifié avec passage de la window pour facilité
-    /*     data_[0].x = 320;
-        data_[0].y = 240;
-        data_[1].x = 310;
-        data_[1].y = 220;
-        data_[2].x = 320;
-        data_[2].y = 225;
-        data_[3].x = 330;
-        data_[3].y = 220;
-        data_[4].x = 320;
-        data_[4].y = 240;
-     */
     window_ = w;
-    center_ = {320, 240};
-    speed_  = {0, 0};
-    angle_  = 0;
+    placeCenter();
 }
 
 SDL_FPoint Ship::getspeed() const {
     return speed_;
 }
 
-void Ship::backtothecenter() {
-    center_ = {320, 240};
+void Ship::placeCenter() {
+    int width, height;
+    SDL_GetWindowSize(window_, &width, &height);
+    center_ = {width / 2, height / 2};
     speed_  = {0, 0};
     angle_  = 0;
 }
