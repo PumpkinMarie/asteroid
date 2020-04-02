@@ -206,3 +206,9 @@ void Game::drawEndMenu() const {
     drawascii(middleW, middleH + 100, name_[1] - 32);
     drawascii(middleW + 40, middleH + 100, name_[2] - 32);
 }
+
+void Game::drawScores() const {
+}
+
+void Game::saveScore() const {
+}

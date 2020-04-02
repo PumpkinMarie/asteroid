@@ -24,8 +24,10 @@ class Game {
     void changeNameIndexMinus();
     void lostLife();
     void score(const int points);
+    void saveScore() const;
     void drawStartMenu() const;
     void drawEndMenu() const;
+    void drawScores() const;
     void drawascii(int x, int y, int ascii) const;
     void drawLives() const;
     void drawScore() const;

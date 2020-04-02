@@ -38,9 +38,10 @@ int main() {
     Game game{window};
     bool ship_spawn =
         false; // savoir si le vaisseau attend l'appui par le joueur pour spawn
-    bool start_game = true;
-    bool end_game   = false;
-    Ship ship       = Ship(window);
+    bool start_game     = true;
+    bool end_game       = false;
+    bool end_game_score = false;
+    Ship ship           = Ship(window);
     std::vector<Bullet> Bullets;
 
     std::vector<Asteroids> asteroids;
@@ -122,8 +123,11 @@ int main() {
         }
 
         if (end_game) {
-            game.drawEndMenu();
-            // done = SDL_TRUE;
+            if (end_game_score) {
+                game.saveScore();
+                game.drawScores();
+            } else
+                game.drawEndMenu();
         }
 
         SDL_RenderPresent(renderer);
@@ -164,25 +168,26 @@ int main() {
                 ship_spawn = false;
             }
 
-            if (end_game) {
-                if (event.type == SDL_KEYDOWN &&
-                    event.key.keysym.sym == SDLK_LEFT) {
+            if (end_game_score && event.type == SDL_KEYDOWN &&
+                event.key.keysym.sym == SDLK_RETURN) {
+                done = SDL_TRUE;
+            }
+
+            if (end_game && event.type == SDL_KEYDOWN) {
+                if (event.key.keysym.sym == SDLK_LEFT) {
                     game.changeNameIndexMinus();
                 }
-                if (event.type == SDL_KEYDOWN &&
-                    event.key.keysym.sym == SDLK_RIGHT) {
+                if (event.key.keysym.sym == SDLK_RIGHT) {
                     game.changeNameIndexPlus();
                 }
-                if (event.type == SDL_KEYDOWN &&
-                    event.key.keysym.sym == SDLK_UP) {
+                if (event.key.keysym.sym == SDLK_UP) {
                     game.changeCaraPlus();
                 }
-                if (event.type == SDL_KEYDOWN &&
-                    event.key.keysym.sym == SDLK_DOWN) {
+                if (event.key.keysym.sym == SDLK_DOWN) {
                     game.changeCaraMinus();
                 }
                 if (event.key.keysym.sym == SDLK_RETURN) {
-                    done = SDL_TRUE;
+                    end_game_score = true;
                 }
             }
         }
