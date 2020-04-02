@@ -57,37 +57,7 @@ void Game::score(const int points) {
     score_ += points;
 }
 
-void drawZero(int x, int y, SDL_Window* window) {
-    SDL_Renderer* renderer = SDL_GetRenderer(window);
-    float mx[4]            = {-2.5f, -2.5f, +2.5f, +2.5f};
-    float my[4]            = {-5.5f, +5.5f, +5.5f, -5.5f};
-    float sx[4];
-    float sy[4];
-
-    // rotate
-    for (int i = 0; i < 4; i++) {
-        sx[i] = mx[i] * cosf(0) - my[i] * sinf(0);
-        sy[i] = mx[i] * sinf(0) + my[i] * cosf(0);
-    }
-    // scale
-    for (int i = 0; i < 4; i++) {
-        sx[i] = sx[i] * 3;
-        sy[i] = sy[i] * 3;
-    }
-    // translate
-    for (int i = 0; i < 4; i++) {
-        sx[i] += x;
-        sy[i] += y;
-    }
-    // draw
-    for (int i = 0; i < 5; i++) {
-        int j = i + 1;
-        SDL_RenderDrawLineF(
-            renderer, sx[i % 4], sy[i % 4], sx[j % 4], sy[j % 4]);
-    }
-}
-
-void drawexclam(SDL_Window* window, int x, int y, int ascii) {
+void drawascii(SDL_Window* window, int x, int y, int ascii) {
     int taille = simplex[ascii][0] * 2;
     float test[taille];
 
@@ -146,7 +116,7 @@ void Game::drawScore() const {
         score = 1000000000;
     do {
         chiffre = score % 10;
-        drawexclam(window_, width - 20, 10, 48 + chiffre - 32);
+        drawascii(window_, width - 20, 10, 48 + chiffre - 32);
         width -= 20;
         score /= 10;
     } while (score != 0);
