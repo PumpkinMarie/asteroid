@@ -24,8 +24,6 @@ Asteroids::Asteroids(
     } else if (side == 3) { // west
         place.x = getRandom(0.0f, static_cast<float>(width));
         place.y = getRandom(0.0f, shipCenter.y - Asteroids::RADIUS_MAX * 2);
-    } else {
-        printf("wow je suis con");
     }
     *this = Asteroids(window, radiusMax, place);
 }
@@ -97,25 +95,11 @@ void Asteroids::changeData() {
     }
 }
 
-void Asteroids::move() {
-    center_.x += speed_.x;
-    center_.y += speed_.y;
-    centerCopie_ = center_;
-    speed_.x += accel_.x;
-    speed_.y += accel_.y;
-    wrapCoordinates();
-    changeData();
-}
-
-SDL_Renderer* Asteroids::getRenderer() {
-    return SDL_GetRenderer(window_);
-}
-
 void Asteroids::wrapCoordinates() {
     int width;
     int height;
     SDL_GetWindowSize(window_, &width, &height);
-
+    centerCopie_   = center_;
     SDL_FPoint res = {center_.x, center_.y};
     res.x          = wrap(center_.x, width);
     res.y          = wrap(center_.y, height);
@@ -138,4 +122,5 @@ void Asteroids::wrapCoordinates() {
         }
         vertex = res;
     }
+    changeData();
 }

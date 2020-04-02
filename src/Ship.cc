@@ -10,10 +10,6 @@ Ship::Ship(SDL_Window*
     placeCenter();
 }
 
-SDL_FPoint Ship::getspeed() const {
-    return speed_;
-}
-
 void Ship::placeCenter() {
     int width, height;
     SDL_GetWindowSize(window_, &width, &height);
@@ -53,19 +49,6 @@ void Ship::draw()
     }
 }
 
-float Ship::getangle() const { // toujours utile (pour les bullets)
-    return angle_;
-}
-
-void Ship::move() { // apply speed change to ship
-    int width, height;
-    SDL_GetWindowSize(window_, &width, &height);
-    center_.x += speed_.x;
-    center_.y += speed_.y;
-    center_.x = wrap(center_.x, width);
-    center_.y = wrap(center_.y, height);
-}
-
 void Ship::rotation(int direction) {
     switch (direction) {
         case 1:
@@ -79,71 +62,8 @@ void Ship::rotation(int direction) {
     }
     // rotation_data(angle);
 }
-/*
-void Ship::rotation_data(float angle) {
-    angle_ = angle_ + angle;
-    angle  = angle * M_PI / 180;
-    for (int i = 0; i < 5; i++) {
-        int xM     = data_[i].x - center_[0];
-        int yM     = data_[i].y - center_[1];
-        data_[i].x = round(xM * cos(angle) + yM * sin(angle) + center_[0]);
-        data_[i].y = round(-xM * sin(angle) + yM * cos(angle) + center_[1]);
-    }
-    int mid_x  = data_[1].x + (data_[3].x - data_[1].x) / 2;
-    int mid_y  = data_[1].y + (data_[3].y - data_[1].y) / 2;
-    data_[2].x = mid_x + (data_[0].x - mid_x) / 3;
-    data_[2].y = mid_y + (data_[0].y - mid_y) / 3;
 
-    angle_tmp_ = angle_move_;
-}*/
-/*
-void Ship::rotation_render() {
-    float angle = angle_ * M_PI / 180 + M_PI / 2;
-
-    data_[0].x = center_[0];
-    data_[0].y = center_[1];
-    data_[1].x = center_[0] - 10;
-    data_[1].y = center_[1] - 20;
-    data_[2].x = center_[0];
-    data_[2].y = center_[1] - 15;
-    data_[3].x = center_[0] + 10;
-    data_[3].y = center_[1] - 20;
-    data_[4].x = center_[0];
-    data_[4].y = center_[1];
-
-    for (int i = 0; i < 5; i++) {
-        int xM     = data_[i].x - center_[0];
-        int yM     = data_[i].y - center_[1];
-        data_[i].x = round(xM * cos(angle) + yM * sin(angle) + center_[0]);
-        data_[i].y = round(-xM * sin(angle) + yM * cos(angle) + center_[1]);
-    }
-    int mid_x  = data_[1].x + (data_[3].x - data_[1].x) / 2;
-    int mid_y  = data_[1].y + (data_[3].y - data_[1].y) / 2;
-    data_[2].x = mid_x + (data_[0].x - mid_x) / 3;
-    data_[2].y = mid_y + (data_[0].y - mid_y) / 3;
-
-    // A revoir version simple mais création de lignes non voulues
-    int x = center_[0];
-    int y = center_[1];
-    if (x < 0)
-        for (auto& val : data_) {
-            val.x += 640;
-        }
-    else if (x >= 640)
-        for (auto& val : data_) {
-            val.x -= 640;
-        }
-    if (y < 0)
-        for (auto& val : data_) {
-            val.y += 480;
-        }
-    else if (x >= 480)
-        for (auto& val : data_) {
-            val.x -= 480;
-        }
-}
-*/
-void Ship::change_speed(float vitesse) {
+void Ship::changeSpeed(float vitesse) {
     // speed_+= vitesse*(1 - (angle_ - angle_move_));
     speed_.x += sin(angle_) * vitesse;
     speed_.y += -cos(angle_) * vitesse;

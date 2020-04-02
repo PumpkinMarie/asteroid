@@ -1,25 +1,18 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-#include <SDL.h>
-
-#include <cmath>
-#include <iostream>
-
 #include "Ship.hh"
+#include "SpaceObject.hh"
 
-class Bullet {
+class Bullet : SpaceObject {
    private:
-    SDL_FPoint source_; // origine du tir
-    SDL_FRect data_;    // position et taille du tir
-    SDL_FPoint speed_;  // angle et rapidité de déplacement du tir
-    int time_;          // temps restant avant disparition
+    int time_; // temps restant avant disparition
 
    public:
-    Bullet(Ship* ship);
-    void move_bullet();
+    Bullet(Ship &ship);
+    void moveBullet();
     int getTime() const;
-    void render_bullet(SDL_Renderer* renderer);
+    void draw() const override;
     bool onCollision(Asteroids a);
 };
 

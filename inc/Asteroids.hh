@@ -7,10 +7,10 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "MovingObject.hh"
+#include "SpaceObject.hh"
 #include "utilitaires.hh"
 
-class Asteroids : public MovingObject {
+class Asteroids : public SpaceObject {
     float radius_;
     SDL_FPoint accel_;
     static const int OUTER_VERTICES_LEN =
@@ -29,8 +29,6 @@ class Asteroids : public MovingObject {
     float getRadius();
     void draw() const override;
     void changeData();
-    void move() override;
-    SDL_Renderer* getRenderer();
     void wrapCoordinates();
     void destruct();
     bool isDead();

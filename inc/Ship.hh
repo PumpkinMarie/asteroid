@@ -3,25 +3,19 @@
 
 #include <SDL.h>
 
-#include <cmath>
-
 #include "Asteroids.hh"
-#include "MovingObject.hh"
+#include "SpaceObject.hh"
 
-class Ship : public MovingObject {
+class Ship : public SpaceObject {
     float angle_;
 
    public:
     Ship(SDL_Window*);
-    float getangle() const;
-    SDL_FPoint getspeed() const;
+    float getAngle() const;
     void placeCenter();
     void draw() const override; // dessine les lignes du vaisseau
-    void move() override; // déplace le vaisseau selon l'angle angle_direction
     void rotation(int direction);
-    // void rotation_data(float angle);
-    // void rotation_render();
-    void change_speed(float vitesse);
+    void changeSpeed(float vitesse);
     bool onCollision(Asteroids a);
 };
 
