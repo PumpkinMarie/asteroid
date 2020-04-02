@@ -13,6 +13,7 @@ class SpaceObject {
     SDL_FPoint accel_;
 
    public:
+    SDL_Window* getWindow() const;
     SDL_Renderer* getRenderer() const;
     SDL_FPoint getSpeed() const;
     SDL_FPoint getCenter() const;

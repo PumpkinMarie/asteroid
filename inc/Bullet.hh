@@ -7,6 +7,7 @@
 class Bullet : SpaceObject {
    private:
     int time_; // temps restant avant disparition
+    static constexpr float RADIUS = 2;
 
    public:
     Bullet(Ship &ship);

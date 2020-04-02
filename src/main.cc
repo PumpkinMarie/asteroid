@@ -86,6 +86,7 @@ int main() {
 
         for (auto& a : asteroids) {
             a.move();
+            a.wrapCoordinates();
             a.draw();
             // Work in progress
             if (!ship_spawn && ship.onCollision(a)) {

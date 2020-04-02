@@ -10,11 +10,16 @@ Ship::Ship(SDL_Window*
     placeCenter();
 }
 
+float Ship::getAngle() const {
+    return angle_;
+}
+
 void Ship::placeCenter() {
     int width, height;
     SDL_GetWindowSize(window_, &width, &height);
     center_ = {width / 2, height / 2};
     speed_  = {0, 0};
+    accel_  = {0, 0};
     angle_  = 0;
 }
 

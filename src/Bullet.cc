@@ -4,12 +4,13 @@
 #include "SpaceObject.hh"
 
 Bullet::Bullet(Ship& ship) {
+    window_           = ship.getWindow();
     SDL_FPoint source = ship.getCenter();
     time_             = 500;
     center_.x         = source.x;
     center_.y =
         source.y - 5.5f; // tir venant de la pointe du vaisseau pas du centre
-
+    accel_                 = {0., 0.};
     float direction        = ship.getAngle();
     SDL_FPoint sourceSpeed = ship.getSpeed();
     speed_.x               = sin(direction) + sourceSpeed.x;
@@ -27,9 +28,15 @@ int Bullet::getTime() const {
 
 void Bullet::draw() const {
     SDL_Renderer* rdr = SDL_GetRenderer(window_);
-    SDL_RenderSetScale(rdr, 2, 2);
-    SDL_RenderDrawPointF(rdr, center_.x, center_.y);
-    SDL_RenderSetScale(rdr, 2, 2);
+    for (int w = 0; w < RADIUS * 2; w++) {
+        for (int h = 0; h < RADIUS * 2; h++) {
+            int dx = RADIUS - w; // horizontal offset
+            int dy = RADIUS - h; // vertical offset
+            if ((dx * dx + dy * dy) <= (RADIUS * RADIUS)) {
+                SDL_RenderDrawPoint(rdr, center_.x + dx, center_.y + dy);
+            }
+        }
+    }
 }
 
 bool Bullet::onCollision(Asteroids a) {

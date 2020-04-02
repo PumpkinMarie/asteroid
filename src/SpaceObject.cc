@@ -6,6 +6,10 @@ SDL_Renderer* SpaceObject::getRenderer() const {
     return SDL_GetRenderer(window_);
 }
 
+SDL_Window* SpaceObject::getWindow() const {
+    return window_;
+}
+
 SDL_FPoint SpaceObject::getSpeed() const {
     return speed_;
 }
