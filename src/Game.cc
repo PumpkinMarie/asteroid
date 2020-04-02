@@ -57,50 +57,50 @@ void Game::score(const int points) {
     score_ += points;
 }
 
+// fonction d'affichage d'un élément du tableau
 void drawascii(SDL_Window* window, int x, int y, int ascii) {
+    // nombre d'éléments décrivant le caractère
     int taille = simplex[ascii][0] * 2;
-    float test[taille];
+    // tableau qui va contenir les données du caractères
+    float cara[taille];
 
     int width;
     int height;
     SDL_GetWindowSize(window, &width, &height);
     SDL_Renderer* renderer = SDL_GetRenderer(window);
 
-    int max_X = simplex[ascii][2];
-    int min_X = simplex[ascii][2];
-
+    // premiers points du tableau en Y
     int max_Y = simplex[ascii][3];
     int min_Y = simplex[ascii][3];
 
+    // on cherche le maximum en Y
     for (int i = 2; i < taille + 2; i += 2) {
-        if (simplex[ascii][i] < min_X && simplex[ascii][i] >= 0)
-            min_X = simplex[ascii][i];
-        if (simplex[ascii][i] > max_X)
-            max_X = simplex[ascii][i];
         if (simplex[ascii][i + 1] < min_Y && simplex[ascii][i + 1] >= 0)
             min_Y = simplex[ascii][i + 1];
         if (simplex[ascii][i + 1] > max_Y)
             max_Y = simplex[ascii][i + 1];
     }
 
+    // remplit le tableau du caractère et modifie les valeurs en Y pour les
+    // inverser (pour les besoins de l'affichage)
     for (int i = 0; i < taille; i += 2) {
         if (simplex[ascii][i + 2] == -1 && simplex[ascii][i + 3] == -1) {
-            test[i]     = -1;
-            test[i + 1] = -1;
+            cara[i]     = -1;
+            cara[i + 1] = -1;
         } else {
-            test[i]     = simplex[ascii][i + 2];
-            test[i + 1] = max_Y - (simplex[ascii][i + 3] - min_Y);
+            cara[i]     = simplex[ascii][i + 2];
+            cara[i + 1] = max_Y - (simplex[ascii][i + 3] - min_Y);
         }
     }
-
+    // draw
     for (int i = 0; i < taille - 2; i += 2) {
-        if (test[i + 2] != -1 && test[i + 3] != -1 && test[i] != -1 &&
-            test[i + 1] != -1)
+        if (cara[i + 2] != -1 && cara[i + 3] != -1 && cara[i] != -1 &&
+            cara[i + 1] != -1)
             SDL_RenderDrawLineF(renderer,
-                test[i] + x,
-                test[i + 1] + y,
-                test[i + 2] + x,
-                test[i + 3] + y);
+                cara[i] + x,
+                cara[i + 1] + y,
+                cara[i + 2] + x,
+                cara[i + 3] + y);
     }
 }
 
@@ -114,6 +114,7 @@ void Game::drawScore() const {
     // score max
     if (score > 1000000000)
         score = 1000000000;
+    // draw chaque chiffre du score
     do {
         chiffre = score % 10;
         drawascii(window_, width - 20, 10, 48 + chiffre - 32);
