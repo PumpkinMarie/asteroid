@@ -18,6 +18,7 @@ class Game {
     int getLives() const;
     void lostLife();
     void score(const int points);
+    void drawascii(int x, int y, int ascii) const;
     void drawLives() const;
     void drawScore() const;
 };
