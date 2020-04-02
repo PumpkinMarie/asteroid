@@ -38,8 +38,9 @@ int main() {
     Game game{window};
     bool ship_spawn =
         false; // savoir si le vaisseau attend l'appui par le joueur pour spawn
-
-    Ship ship = Ship(window);
+    bool start_game = true;
+    bool end_game   = false;
+    Ship ship       = Ship(window);
     std::vector<Bullet> Bullets;
 
     std::vector<Asteroids> asteroids;
@@ -57,64 +58,73 @@ int main() {
 
         game.drawLives();
         game.drawScore();
+        if (start_game)
+            game.drawStartMenu();
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
         // Update Bullets
-        for (auto& b : Bullets)
-            b.moveBullet();
 
-        if (Bullets.size() > 0) {
-            auto i = remove_if(Bullets.begin(), Bullets.end(), [&](Bullet b) {
-                return (b.getTime() <= 0);
-            });
-            if (i != Bullets.end())
-                Bullets.erase(i);
-        }
+        if (!start_game && !end_game) {
+            for (auto& b : Bullets)
+                b.moveBullet();
 
-        for (int i = 0; i < asteroids.size(); i++) {
-            if (asteroids[i].isDead()) {
-                float division    = asteroids[i].getRadius() / 2;
-                SDL_FPoint center = asteroids[i].getCenter();
-                if (division > 10) {
-                    asteroids.push_back(Asteroids{window, division, center});
-                    asteroids.push_back(Asteroids{window, division, center});
-                }
-                asteroids.erase(asteroids.begin() + i);
-            }
-        }
-
-        for (auto& a : asteroids) {
-            a.move();
-            a.wrapCoordinates();
-            a.draw();
-            // Work in progress
-            if (!ship_spawn && ship.onCollision(a)) {
-                game.lostLife();
-                ship_spawn = true;
-                ship.placeCenter();
-                std::cout << game.getLives() << std::endl;
-                if (game.getLives() == 0)
-                    done = SDL_TRUE;
-            }
             if (Bullets.size() > 0) {
                 auto i = remove_if(Bullets.begin(),
                     Bullets.end(),
-                    [&](Bullet b) { return (b.onCollision(a)); });
-                if (i != Bullets.end()) {
+                    [&](Bullet b) { return (b.getTime() <= 0); });
+                if (i != Bullets.end())
                     Bullets.erase(i);
-                    a.destruct();
-                    game.score(Asteroids::RADIUS_MAX / a.getRadius() * 10);
+            }
+
+            for (int i = 0; i < asteroids.size(); i++) {
+                if (asteroids[i].isDead()) {
+                    float division    = asteroids[i].getRadius() / 2;
+                    SDL_FPoint center = asteroids[i].getCenter();
+                    if (division > 10) {
+                        asteroids.push_back(
+                            Asteroids{window, division, center});
+                        asteroids.push_back(
+                            Asteroids{window, division, center});
+                    }
+                    asteroids.erase(asteroids.begin() + i);
                 }
             }
+            for (auto& a : asteroids) {
+                a.move();
+                a.wrapCoordinates();
+                a.draw();
+                // Work in progress
+                if (!ship_spawn && ship.onCollision(a)) {
+                    game.lostLife();
+                    ship_spawn = true;
+                    ship.placeCenter();
+                    if (game.getLives() == 0)
+                        end_game = true;
+                }
+                if (Bullets.size() > 0) {
+                    auto i = remove_if(Bullets.begin(),
+                        Bullets.end(),
+                        [&](Bullet b) { return (b.onCollision(a)); });
+                    if (i != Bullets.end()) {
+                        Bullets.erase(i);
+                        a.destruct();
+                        game.score(Asteroids::RADIUS_MAX / a.getRadius() * 10);
+                    }
+                }
+            }
+            // Draw Bullets
+            for (auto b : Bullets)
+                b.draw();
+
+            if (!ship_spawn)
+                ship.draw();
         }
 
-        // Draw Bullets
-        for (auto b : Bullets)
-            b.draw();
-
-        if (!ship_spawn)
-            ship.draw();
+        if (end_game) {
+            game.drawEndMenu();
+            // done = SDL_TRUE;
+        }
 
         SDL_RenderPresent(renderer);
 
@@ -123,6 +133,9 @@ int main() {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 done = SDL_TRUE;
+            }
+            if (start_game && event.key.keysym.sym == SDLK_RETURN) {
+                start_game = false;
             }
             if (!ship_spawn) {
                 if (event.type == SDL_KEYDOWN &&
@@ -146,9 +159,31 @@ int main() {
                     Bullets.push_back(Bullet{ship});
                 }
             }
-            if (ship_spawn && event.type == SDL_KEYDOWN &&
+            if (!start_game && ship_spawn && event.type == SDL_KEYDOWN &&
                 event.key.keysym.sym == SDLK_SPACE) {
                 ship_spawn = false;
+            }
+
+            if (end_game) {
+                if (event.type == SDL_KEYDOWN &&
+                    event.key.keysym.sym == SDLK_LEFT) {
+                    game.changeNameIndexMinus();
+                }
+                if (event.type == SDL_KEYDOWN &&
+                    event.key.keysym.sym == SDLK_RIGHT) {
+                    game.changeNameIndexPlus();
+                }
+                if (event.type == SDL_KEYDOWN &&
+                    event.key.keysym.sym == SDLK_UP) {
+                    game.changeCaraPlus();
+                }
+                if (event.type == SDL_KEYDOWN &&
+                    event.key.keysym.sym == SDLK_DOWN) {
+                    game.changeCaraMinus();
+                }
+                if (event.key.keysym.sym == SDLK_RETURN) {
+                    done = SDL_TRUE;
+                }
             }
         }
         ship.move();

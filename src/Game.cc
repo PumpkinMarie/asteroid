@@ -3,6 +3,27 @@
 #include "alphabet.hh"
 
 Game::Game(SDL_Window* w) : window_(w) {
+    name_[0] = 65;
+    name_[1] = 65;
+    name_[2] = 65;
+}
+
+void Game::changeCaraPlus() {
+    if (name_[name_index_] < 126)
+        name_[name_index_]++;
+}
+void Game::changeCaraMinus() {
+    if (name_[name_index_] > 32)
+        name_[name_index_]--;
+}
+
+void Game::changeNameIndexPlus() {
+    if (name_index_ < 2)
+        name_index_++;
+}
+void Game::changeNameIndexMinus() {
+    if (name_index_ > 0)
+        name_index_--;
 }
 
 int Game::getLives() const {
@@ -121,4 +142,67 @@ void Game::drawScore() const {
         width -= 20;
         score /= 10;
     } while (score != 0);
+}
+
+void Game::drawStartMenu() const {
+    int width;
+    int height;
+    SDL_GetWindowSize(window_, &width, &height);
+    SDL_Renderer* renderer = SDL_GetRenderer(window_);
+
+    int middleW = width / 2;
+    // Push Start
+    drawascii(middleW - 100, height / 2, 80 - 32);
+    drawascii(middleW - 80, height / 2, 85 - 32);
+    drawascii(middleW - 60, height / 2, 83 - 32);
+    drawascii(middleW - 40, height / 2, 72 - 32);
+    drawascii(middleW - 20, height / 2, 32 - 32);
+    drawascii(middleW + 20, height / 2, 83 - 32);
+    drawascii(middleW + 40, height / 2, 84 - 32);
+    drawascii(middleW + 60, height / 2, 65 - 32);
+    drawascii(middleW + 80, height / 2, 82 - 32);
+    drawascii(middleW + 100, height / 2, 84 - 32);
+}
+
+void Game::drawEndMenu() const {
+    int width;
+    int height;
+    SDL_GetWindowSize(window_, &width, &height);
+    SDL_Renderer* renderer = SDL_GetRenderer(window_);
+
+    int middleW = width / 2;
+    int middleH = height / 2;
+
+    // GAME OVER
+    drawascii(middleW - 80, middleH - 50, 71 - 32);
+    drawascii(middleW - 60, middleH - 50, 65 - 32);
+    drawascii(middleW - 40, middleH - 50, 77 - 32);
+    drawascii(middleW - 20, middleH - 50, 69 - 32);
+    drawascii(middleW, middleH - 50, 32 - 32);
+    drawascii(middleW + 20, middleH - 50, 79 - 32);
+    drawascii(middleW + 40, middleH - 50, 86 - 32);
+    drawascii(middleW + 60, middleH - 50, 69 - 32);
+    drawascii(middleW + 80, middleH - 50, 82 - 32);
+
+    // ENTER YOUR NAME
+    drawascii(middleW - 140, middleH + 20, 69 - 32);
+    drawascii(middleW - 120, middleH + 20, 78 - 32);
+    drawascii(middleW - 100, middleH + 20, 84 - 32);
+    drawascii(middleW - 80, middleH + 20, 69 - 32);
+    drawascii(middleW - 60, middleH + 20, 82 - 32);
+    drawascii(middleW - 40, middleH + 20, 32 - 32);
+    drawascii(middleW - 20, middleH + 20, 89 - 32);
+    drawascii(middleW, middleH + 20, 79 - 32);
+    drawascii(middleW + 20, middleH + 20, 85 - 32);
+    drawascii(middleW + 40, middleH + 20, 82 - 32);
+    drawascii(middleW + 60, middleH + 20, 32 - 32);
+    drawascii(middleW + 80, middleH + 20, 78 - 32);
+    drawascii(middleW + 100, middleH + 20, 65 - 32);
+    drawascii(middleW + 120, middleH + 20, 77 - 32);
+    drawascii(middleW + 140, middleH + 20, 69 - 32);
+
+    // NAME
+    drawascii(middleW - 40, middleH + 100, name_[0] - 32);
+    drawascii(middleW, middleH + 100, name_[1] - 32);
+    drawascii(middleW + 40, middleH + 100, name_[2] - 32);
 }
