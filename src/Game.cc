@@ -58,7 +58,7 @@ void Game::score(const int points) {
 }
 
 // fonction d'affichage d'un élément du tableau
-void drawascii(SDL_Window* window, int x, int y, int ascii) {
+void Game::drawascii(int x, int y, int ascii) const {
     // nombre d'éléments décrivant le caractère
     int taille = simplex[ascii][0] * 2;
     // tableau qui va contenir les données du caractères
@@ -66,8 +66,8 @@ void drawascii(SDL_Window* window, int x, int y, int ascii) {
 
     int width;
     int height;
-    SDL_GetWindowSize(window, &width, &height);
-    SDL_Renderer* renderer = SDL_GetRenderer(window);
+    SDL_GetWindowSize(window_, &width, &height);
+    SDL_Renderer* renderer = SDL_GetRenderer(window_);
 
     // premiers points du tableau en Y
     int max_Y = simplex[ascii][3];
@@ -117,7 +117,7 @@ void Game::drawScore() const {
     // draw chaque chiffre du score
     do {
         chiffre = score % 10;
-        drawascii(window_, width - 20, 10, 48 + chiffre - 32);
+        drawascii(width - 20, 10, 48 + chiffre - 32);
         width -= 20;
         score /= 10;
     } while (score != 0);
