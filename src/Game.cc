@@ -205,6 +205,20 @@ void Game::drawEndMenu() const {
     drawascii(middleW - 40, middleH + 100, name_[0] - 32);
     drawascii(middleW, middleH + 100, name_[1] - 32);
     drawascii(middleW + 40, middleH + 100, name_[2] - 32);
+
+    // _ _ _ (underscore pour aider le joueur à savoir quelle lettre il modifie)
+    int val = 0;
+    switch (name_index_) {
+        case 0:
+            val = -40;
+            break;
+        case 1:
+            val = 0;
+            break;
+        case 2:
+            val = 40;
+    }
+    drawascii(middleW + val, middleH + 140, 95 - 32);
 }
 
 void Game::drawScores() const {
