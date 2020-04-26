@@ -13,8 +13,8 @@ Bullet::Bullet(Ship& ship) {
     accel_                 = {0., 0.};
     float direction        = ship.getAngle();
     SDL_FPoint sourceSpeed = ship.getSpeed();
-    speed_.x               = sin(direction) + sourceSpeed.x;
-    speed_.y               = -cos(direction) + sourceSpeed.y;
+    speed_.x               = std::sin(direction) + sourceSpeed.x;
+    speed_.y               = -std::cos(direction) + sourceSpeed.y;
 }
 
 void Bullet::moveBullet() {

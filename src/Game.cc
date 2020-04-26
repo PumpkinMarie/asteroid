@@ -1,5 +1,8 @@
 #include "Game.hh"
 
+#include <fstream>
+#include <iostream>
+
 #include "alphabet.hh"
 
 Game::Game(SDL_Window* w) : window_(w) {
@@ -225,4 +228,11 @@ void Game::drawScores() const {
 }
 
 void Game::saveScore() const {
+    std::ofstream outputFile;
+    outputFile.open("scores.dat", std::ios::app);
+    for (auto c : name_) {
+        outputFile << c;
+    }
+    outputFile << ":" << score_ << std::endl;
+    outputFile.close();
 }

@@ -42,7 +42,7 @@ Asteroids::Asteroids(SDL_Window* window, float radiusMax, SDL_FPoint center) {
     SDL_GetWindowSize(window_, &width, &height);
     center_.x = center.x;
     center_.y = center.y;
-    radius_   = rand() % int(radiusMax) + 10;
+    radius_   = getRandom(10.f, radiusMax);
 
     centerCopie_ = center_;
 
@@ -88,8 +88,8 @@ void Asteroids::draw() const {
 void Asteroids::changeData() {
     for (int i = 0; i < OUTER_VERTICES_LEN; i++) {
         float angle       = i * 2 * M_PI / OUTER_VERTICES_LEN;
-        float cosA        = float(std::cos(angle)) * variations_[i];
-        float sinA        = float(sin(angle)) * variations_[i];
+        float cosA        = std::cos(angle) * variations_[i];
+        float sinA        = std::sin(angle) * variations_[i];
         outerVertices_[i] = {cosA + center_.x, sinA + center_.y};
         verticesCopy_[i]  = {cosA + centerCopie_.x, sinA + centerCopie_.y};
     }

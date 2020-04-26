@@ -126,6 +126,7 @@ int main() {
             if (end_game_score) {
                 game.saveScore();
                 game.drawScores();
+                end_game_score = false;
             } else
                 game.drawEndMenu();
         }
