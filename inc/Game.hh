@@ -10,8 +10,8 @@
 
 class Game {
     SDL_Window* const window_;
-    int lives_      = 6;
-    long int score_ = 0;
+    int lives_       = 6;
+    u_int64_t score_ = 0;
     u_char name_[3];
     int name_index_ = 0;
 

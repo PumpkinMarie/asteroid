@@ -1,7 +1,11 @@
 #include "Game.hh"
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <sstream>
+#include <utility>
+#include <vector>
 
 #include "alphabet.hh"
 
@@ -225,11 +229,28 @@ void Game::drawEndMenu() const {
 }
 
 void Game::drawScores() const {
+    std::ifstream inputFile("scores.dat");
+    char line[15]; // 3 for name 1 for colon 10 for score 1 for security
+    std::vector<std::pair<std::string, u_int64_t>> records;
+    while (inputFile.getline(line, 15)) {
+        std::string str(line);
+        std::string name(str.substr(0, str.find(':')));
+        u_int64_t score;
+        std::istringstream(str.substr(str.find(':') + 1)) >> score;
+        records.push_back({name, score});
+    }
+    std::sort(
+        records.begin(), records.end(), []<class T>(T a, T b)->bool {
+            return a.second > b.second;
+        });
+    records.resize(10);
+    for (auto pair : records) {
+        std::cout << pair.first << "\t\t" << pair.second << std::endl;
+    }
 }
 
 void Game::saveScore() const {
-    std::ofstream outputFile;
-    outputFile.open("scores.dat", std::ios::app);
+    std::ofstream outputFile("scores.dat", std::ios::app);
     for (auto c : name_) {
         outputFile << c;
     }
