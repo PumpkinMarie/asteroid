@@ -239,6 +239,7 @@ void Game::drawScores() const {
         std::istringstream(str.substr(str.find(':') + 1)) >> score;
         records.push_back({name, score});
     }
+    inputFile.close();
     std::sort(
         records.begin(), records.end(), []<class T>(T a, T b)->bool {
             return a.second > b.second;

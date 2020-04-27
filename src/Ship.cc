@@ -17,7 +17,7 @@ float Ship::getAngle() const {
 void Ship::placeCenter() {
     int width, height;
     SDL_GetWindowSize(window_, &width, &height);
-    center_ = {width / 2, height / 2};
+    center_ = {width / 2.f, height / 2.f};
     speed_  = {0, 0};
     accel_  = {0, 0};
     angle_  = 0;
@@ -57,21 +57,24 @@ void Ship::draw()
 void Ship::rotation(int direction) {
     switch (direction) {
         case 1:
-            angle_ += M_PI / 23; // environ pi sur 6
+            angle_ += M_PI / 16;
             break;
         case 2:
-            angle_ -= M_PI / 23;
+            angle_ -= M_PI / 16;
             break;
         default:
             break;
     }
-    // rotation_data(angle);
 }
 
 void Ship::changeSpeed(float vitesse) {
-    // speed_+= vitesse*(1 - (angle_ - angle_move_));
+    static const float maxPixelPerPress = 4.;
     speed_.x += sin(angle_) * vitesse;
     speed_.y += -cos(angle_) * vitesse;
+    speed_.x = speed_.x < maxPixelPerPress ? speed_.x : maxPixelPerPress;
+    speed_.y = speed_.y < maxPixelPerPress ? speed_.y : maxPixelPerPress;
+    speed_.x = speed_.x > -maxPixelPerPress ? speed_.x : -maxPixelPerPress;
+    speed_.y = speed_.y > -maxPixelPerPress ? speed_.y : -maxPixelPerPress;
     move();
 }
 

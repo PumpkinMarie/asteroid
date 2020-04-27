@@ -156,10 +156,6 @@ int main() {
                     ship.changeSpeed(0.1);
                 }
                 if (event.type == SDL_KEYDOWN &&
-                    event.key.keysym.sym == SDLK_DOWN) {
-                    ship.changeSpeed(0.1);
-                }
-                if (event.type == SDL_KEYDOWN &&
                     event.key.keysym.sym == SDLK_SPACE) {
                     Bullets.push_back(Bullet{ship});
                 }
