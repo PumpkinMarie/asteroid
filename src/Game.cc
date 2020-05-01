@@ -229,6 +229,27 @@ void Game::drawEndMenu() const {
 }
 
 void Game::drawScores() const {
+    int width;
+    int height;
+    SDL_GetWindowSize(window_, &width, &height);
+    SDL_Renderer* renderer = SDL_GetRenderer(window_);
+
+    int middleW = width / 2;
+    int middleH = height / 2;
+
+    // HIGH SCORES
+    drawascii(middleW - 140, 40, 'H' - 32);
+    drawascii(middleW - 120, 40, 'I' - 32);
+    drawascii(middleW - 100, 40, 'G' - 32);
+    drawascii(middleW - 80, 40, 'H' - 32);
+    drawascii(middleW - 60, 40, ' ' - 32);
+    drawascii(middleW - 40, 40, 'S' - 32);
+    drawascii(middleW - 20, 40, 'C' - 32);
+    drawascii(middleW, 40, 'O' - 32);
+    drawascii(middleW + 20, 40, 'R' - 32);
+    drawascii(middleW + 40, 40, 'E' - 32);
+    drawascii(middleW + 60, 40, 'S' - 32);
+
     std::ifstream inputFile("scores.dat");
     char line[15]; // 3 for name 1 for colon 10 for score 1 for security
     std::vector<std::pair<std::string, u_int64_t>> records;
@@ -245,8 +266,26 @@ void Game::drawScores() const {
             return a.second > b.second;
         });
     records.resize(10);
+    int i = -100;
     for (auto pair : records) {
-        std::cout << pair.first << "\t\t" << pair.second << std::endl;
+        int j = 200;
+        if (pair.first != "") {
+            drawascii(middleW - 80, middleH + i, pair.first[0] - 32);
+            drawascii(middleW - 40, middleH + i, pair.first[1] - 32);
+            drawascii(middleW + 0, middleH + i, pair.first[2] - 32);
+
+            long int score = pair.second;
+            int chiffre    = score % 10;
+            // draw chaque chiffre du score
+            do {
+                chiffre = score % 10;
+                drawascii(middleW + j, middleH + i, 48 + chiffre - 32);
+                width -= 20;
+                score /= 10;
+                j -= 20;
+            } while (score != 0);
+        }
+        i += 40;
     }
 }
 
