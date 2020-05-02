@@ -28,6 +28,8 @@ void SpaceObject::move() { // apply speed change to ship
     center_.y += speed_.y;
     center_.x = wrap(center_.x, width);
     center_.y = wrap(center_.y, height);
-    speed_.x += accel_.y;
+    speed_.x += accel_.x;
     speed_.y += accel_.y;
+    accel_.x = 0;
+    accel_.y = 0;
 }
