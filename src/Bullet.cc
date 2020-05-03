@@ -10,11 +10,11 @@ Bullet::Bullet(Ship& ship) {
     center_.x         = source.x;
     center_.y =
         source.y - 5.5f; // tir venant de la pointe du vaisseau pas du centre
+    accel_                 = {0., 0.};
     float direction        = ship.getAngle();
     SDL_FPoint sourceSpeed = ship.getSpeed();
-    accel_   = {std::sin(direction) * 1., -std::cos(direction) * 1.};
-    speed_.x = sourceSpeed.x;
-    speed_.y = sourceSpeed.y;
+    speed_.x               = std::sin(direction) + sourceSpeed.x;
+    speed_.y               = -std::cos(direction) + sourceSpeed.y;
 }
 
 void Bullet::moveBullet() {
