@@ -30,13 +30,12 @@ Asteroids::Asteroids(
 
 Asteroids::Asteroids(SDL_Window* window, float radiusMax, SDL_FPoint center) {
     window_      = window;
-    float speedx = getRandom(0.0f, 3.0f);
-    float speedy = getRandom(0.0f, 3.0f);
+    float speedx = getRandom(1.0f, 3.0f);
+    float speedy = getRandom(1.0f, 3.0f);
     // on vérifie que l'astéroide n'est pas à l'arrêt
     if (speedx - 1 == 0 && speedy - 1 == 0)
         speedx = 2;
     speed_ = {speedx - 1, speedy - 1};
-    accel_ = {0, 0};
     int width;
     int height;
     SDL_GetWindowSize(window_, &width, &height);
