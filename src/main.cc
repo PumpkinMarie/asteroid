@@ -38,14 +38,15 @@ int main() {
     Game game{window};
     bool ship_spawn =
         false; // savoir si le vaisseau attend l'appui par le joueur pour spawn
-    bool start_game = true;
-    int end_game    = 0;
-
-    Ship ship = Ship(window);
+    bool start_game  = true;
+    int end_game     = 0;
+    int asteroidsMax = 10;
+    Ship ship        = Ship(window);
     std::vector<Bullet> Bullets;
 
     std::vector<Asteroids> asteroids;
-    for (int i = 0; i < getRandom(15, 20); i++) {
+
+    for (int i = 0; i < getRandom(asteroidsMax - 5, asteroidsMax); i++) {
         asteroids.push_back(Asteroids{window, ship.getCenter()});
     }
     while (!done) // display loop
@@ -89,6 +90,13 @@ int main() {
                             Asteroids{window, division, center});
                     }
                     asteroids.erase(asteroids.begin() + i);
+                }
+            }
+            if (asteroids.size() == 0) {
+                asteroidsMax += 5;
+                for (int i = 0; i < getRandom(asteroidsMax - 5, asteroidsMax);
+                     i++) {
+                    asteroids.push_back(Asteroids{window, ship.getCenter()});
                 }
             }
             for (auto& a : asteroids) {

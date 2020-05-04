@@ -19,6 +19,7 @@ void Ship::placeCenter() {
     SDL_GetWindowSize(window_, &width, &height);
     center_ = {width / 2.f, height / 2.f};
     angle_  = 0;
+    speed_  = {0, 0};
 }
 
 void Ship::draw()
