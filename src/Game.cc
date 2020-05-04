@@ -261,10 +261,9 @@ void Game::drawScores() const {
         records.push_back({name, score});
     }
     inputFile.close();
-    std::sort(
-        records.begin(), records.end(), []<class T>(T a, T b)->bool {
-            return a.second > b.second;
-        });
+    std::sort(records.begin(), records.end(), [](auto a, auto b) -> bool {
+        return a.second > b.second;
+    });
     records.resize(10);
     int i = -100;
     for (auto pair : records) {
